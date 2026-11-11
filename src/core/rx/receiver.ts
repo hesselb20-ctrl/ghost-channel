@@ -107,6 +107,8 @@ export class Receiver {
   private winner: Demodulator | null = null;
   private tLock: number | null = null;
   private tLockLast = 0;
+  /** Set when a lock was just applied; the lock's clock starts at the next frame. */
+  private lockClockPending = false;
   private lastTrack = 0;
   private cooldownUntil = -Infinity;
   private lockAttempts = 0;
@@ -217,6 +219,11 @@ export class Receiver {
     }
 
     // Locked: sample the grid in this frame and run the demodulators.
+    if (this.lockClockPending) {
+      this.lockClockPending = false;
+      this.tLockLast = frame.t;
+      this.lastTrack = frame.t;
+    }
     const sampler = this.sampler!;
     const lq = new Float32Array(sampler.nCells);
     const cq = new Float32Array(sampler.nCells);
@@ -260,7 +267,10 @@ export class Receiver {
       const quiet = frame.t - Math.max(this.tLastPacket, this.tLockLast);
       if (quiet > Math.max(2.5, 7 * pktSec) && lead.stats.packetsBad >= 5) {
         this.log(`lock dropped (no valid packet for ${quiet.toFixed(1)} s)`);
-        if (this.quad && this.tFirstPacket === null) this.rejected.push({ quad: cloneQuad(this.quad), until: frame.t + 12 });
+        // Coherent pilots with failing packets usually means the right place
+        // and a poor signal, so only a lock whose pilots were also doubtful is
+        // kept off the list of places to try.
+        if (this.quad && this.tFirstPacket === null && lead.coherence < 0.7) this.rejected.push({ quad: cloneQuad(this.quad), until: frame.t + 12 });
         this.unlock();
         this.cooldownUntil = frame.t + 0.2;
       }
@@ -421,6 +431,11 @@ export class Receiver {
     if (this.tLock === null) this.tLock = now;
     this.tLockLast = now;
     this.lastTrack = now;
+    // `now` is the frame that started the acquisition. On a slow device the
+    // acquisition itself can take a second, during which frames are skipped,
+    // so the allowance for "show me coherent pilots" must start counting at
+    // the first frame that arrives after the lock, not here.
+    this.lockClockPending = true;
     this.detection = best.kind;
     this.log(
       `locked ${best.grid.cols}x${best.grid.rows} via ${best.kind} (${best.plane}), contrast ${best.contrast.toFixed(1)}, pilots ${best.pilotCoh.toFixed(2)}, quadrant ${sx.toFixed(1)}x${sy.toFixed(1)} px`,
