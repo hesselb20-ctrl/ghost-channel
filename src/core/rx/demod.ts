@@ -279,12 +279,22 @@ export class Demodulator {
   /** |Z| / sigma per cell in lock-grid order, for the heat map. */
   cellConf: Float32Array;
   lastGoodSymbolTime = -Infinity;
+  /** Count of symbols whose pilots agreed; the receiver watches it change. */
+  goodSymbols = 0;
   stats: DemodStats = { symbols: 0, weakSymbols: 0, packetsOk: 0, packetsBad: 0, rawBits: 0, rawBitErrors: 0 };
 
   /** Phase-plane slopes measured when the grid was locked; narrows the per-symbol search. */
   setSlopePrior(su: number, sv: number): void {
     this.slope = { su, sv, n: 3 };
   }
+
+  /** One line of internals for the diagnostics panel. */
+  debugLine(): string {
+    const s = this.slope;
+    return `${this.preset.key}: coh ${this.coherence.toFixed(2)} last ${this.lastCoh.toFixed(2)} sym ${this.stats.symbols} weak ${this.stats.weakSymbols} ok ${this.stats.packetsOk} bad ${this.stats.packetsBad} plane ${this.plane ?? '?'} orient ${this.orient ?? '?'} slope ${s ? s.su.toFixed(2) + ',' + s.sv.toFixed(2) + ' n' + s.n : '-'} frames/sym ${this.lastFrames} tau ${this.timingDebug ? (this.timingDebug.est * 1000).toFixed(0) : '?'}`;
+  }
+  private lastCoh = 0;
+  private lastFrames = 0;
 
   onPacket: (info: PacketInfo) => void = () => {};
   onSymbol: ((s: SymbolDebug) => void) | null = null;
@@ -496,6 +506,7 @@ export class Demodulator {
       return;
     }
     const m = idx.length;
+    this.lastFrames = m;
     this.stats.symbols++;
 
     const planes: PlaneName[] = this.plane ? [this.plane] : ['chroma', 'luma'];
@@ -629,6 +640,7 @@ export class Demodulator {
     }
 
     // Diagnostics.
+    this.lastCoh = best.coh;
     this.coherence += 0.4 * (best.coh - this.coherence);
     let pilotPow = 0;
     for (let k = 0; k < np; k++) {
@@ -644,7 +656,10 @@ export class Demodulator {
 
     const good = best.coh > 0.6;
     if (!good) this.stats.weakSymbols++;
-    else this.lastGoodSymbolTime = start + this.Ts / 2;
+    else {
+      this.lastGoodSymbolTime = start + this.Ts / 2;
+      this.goodSymbols++;
+    }
 
     // Sticky plane and orientation once they have won a few good symbols.
     if (good && (this.plane === null || this.orient === null)) {

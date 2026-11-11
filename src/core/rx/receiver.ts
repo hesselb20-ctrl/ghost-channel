@@ -109,6 +109,12 @@ export class Receiver {
   private tLockLast = 0;
   /** Set when a lock was just applied; the lock's clock starts at the next frame. */
   private lockClockPending = false;
+  /** Seconds of received frames since the pilots last agreed / a packet last passed. */
+  private quietPilots = 0;
+  private quietPackets = 0;
+  private prevLockedT = 0;
+  private seenGoodSymbols = 0;
+  private everCoherent = false;
   private lastTrack = 0;
   private cooldownUntil = -Infinity;
   private lockAttempts = 0;
@@ -223,6 +229,11 @@ export class Receiver {
       this.lockClockPending = false;
       this.tLockLast = frame.t;
       this.lastTrack = frame.t;
+      this.prevLockedT = frame.t;
+      this.quietPilots = 0;
+      this.quietPackets = 0;
+      this.seenGoodSymbols = 0;
+      this.everCoherent = false;
     }
     const sampler = this.sampler!;
     const lq = new Float32Array(sampler.nCells);
@@ -248,25 +259,39 @@ export class Receiver {
       this.track();
     }
 
-    // Give up on a lock that never produced coherent pilots, or lost them.
+    // Deciding when to give up on a lock. Time is counted only while frames
+    // are actually arriving: on a slow device frames are skipped during an
+    // acquisition, and that hole in the timestamps must not be mistaken for
+    // "nothing happened for two seconds".
     const lead = this.winner ?? this.bestDemod();
-    const sinceGood = frame.t - Math.max(lead?.lastGoodSymbolTime ?? -Infinity, this.tLockLast);
-    const everGood = (lead?.lastGoodSymbolTime ?? -Infinity) > -Infinity;
-    const patience = everGood ? Math.max(1.6, 5 * (lead?.Ts ?? 0.2)) : Math.max(3, 8 * Math.max(...this.demods.map((d) => d.Ts)));
-    if (sinceGood > patience) {
-      this.log(`lock dropped (no coherent pilots for ${sinceGood.toFixed(1)} s)`);
-      if (this.quad && !everGood) this.rejected.push({ quad: cloneQuad(this.quad), until: frame.t + 12 });
+    const dt = Math.min(Math.max(0, frame.t - this.prevLockedT), 0.1);
+    this.prevLockedT = frame.t;
+    this.quietPilots += dt;
+    this.quietPackets += dt;
+    const goodCount = lead?.goodSymbols ?? 0;
+    if (goodCount !== this.seenGoodSymbols) {
+      this.seenGoodSymbols = goodCount;
+      // One symbol can look coherent by chance (a dozen pilots, a slope
+      // search); the running average cannot for long.
+      if ((lead?.coherence ?? 0) > 0.6) {
+        this.quietPilots = 0;
+        this.everCoherent = true;
+      }
+    }
+    const patience = this.everCoherent ? Math.max(1.6, 5 * (lead?.Ts ?? 0.2)) : Math.max(3, 8 * Math.max(...this.demods.map((d) => d.Ts)));
+    if (this.quietPilots > patience) {
+      this.log(`lock dropped (no coherent pilots for ${this.quietPilots.toFixed(1)} s of frames)`);
+      if (this.quad && !this.everCoherent) this.rejected.push({ quad: cloneQuad(this.quad), until: frame.t + 12 });
       this.unlock();
       this.cooldownUntil = frame.t + 0.2;
       return;
     }
-    // Pilots can look fine on a grid that is slightly warped while the data
-    // cells fail. If packets keep failing, let go and acquire again.
+    // Pilots can look fine on a grid that is warped, or on the wrong grid
+    // altogether, while no packet ever passes its CRC. Let go and look again.
     if (lead) {
       const pktSec = lead.Ts * lead.preset.symbolsPerPacket;
-      const quiet = frame.t - Math.max(this.tLastPacket, this.tLockLast);
-      if (quiet > Math.max(2.5, 7 * pktSec) && lead.stats.packetsBad >= 5) {
-        this.log(`lock dropped (no valid packet for ${quiet.toFixed(1)} s)`);
+      if (this.quietPackets > Math.max(2.5, 7 * pktSec)) {
+        this.log(`lock dropped (no valid packet for ${this.quietPackets.toFixed(1)} s of frames)`);
         // Coherent pilots with failing packets usually means the right place
         // and a poor signal, so only a lock whose pilots were also doubtful is
         // kept off the list of places to try.
@@ -338,7 +363,7 @@ export class Receiver {
           const q0 = rotateQuad(cand.quad, rot);
           const { sx, sy } = subcellPixels(q0, grid.cols, grid.rows);
           // Cells are close to square on a real screen; skip absurd aspect matches.
-          if (sx < 2.2 || sy < 2.2 || sx / sy > 2.6 || sy / sx > 2.6) continue;
+          if (sx < 2.2 || sy < 2.2 || sx / sy > 1.8 || sy / sx > 1.8) continue;
           for (const plane of planes) {
             const sm = samplingFor(Math.min(sx, sy), 3);
             const sampler = new GridSampler(grid.cols, grid.rows, sm.k, 0.6);
@@ -503,6 +528,9 @@ export class Receiver {
     // Times reported to the user are when the receiver knew, not when the symbol aired.
     if (this.tFirstPacket === null) this.tFirstPacket = this.now;
     this.tLastPacket = this.now;
+    this.quietPackets = 0;
+    this.quietPilots = 0;
+    this.everCoherent = true;
     const layout = makeLayout(d.preset);
     const h = info.header;
     if (!this.decoder || this.decoder.K !== h.K || this.decoder.session !== h.session || this.decoder.blockSize !== layout.blockSize) {

@@ -165,7 +165,7 @@ function handle(rgba: Uint8Array | Uint8ClampedArray, w: number, h: number, t: n
       scaleMs: scaleMsAvg,
       debug: receiver
         .debugDemods()
-        .map((d) => `${d.preset.key}: coh ${d.coherence.toFixed(2)} sym ${d.stats.symbols} weak ${d.stats.weakSymbols} ok ${d.stats.packetsOk} bad ${d.stats.packetsBad} plane ${d.plane ?? '?'} orient ${d.orient ?? '?'} tau ${d.timingDebug ? (d.timingDebug.est * 1000).toFixed(0) : '?'}`)
+        .map((d) => d.debugLine())
         .join(' | '),
       procW: w,
       procH: h,
