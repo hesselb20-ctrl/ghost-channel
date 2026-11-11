@@ -7,6 +7,8 @@ An invisible QR code. Ghost Channel hides a link, a message or a small file insi
 - **Blind test** (`/abtest/`): find the amplitude at which you can no longer tell a modulated clip from a clean one.
 - The landing page (`/`) is itself broadcasting a message from its hero picture.
 
+**Live site:** https://hesselb20-ctrl.github.io/ghost-channel/ (open `/receive/` on a phone and `/send/` on a laptop).
+
 ## Status, honestly
 
 | | Where it has been verified |
