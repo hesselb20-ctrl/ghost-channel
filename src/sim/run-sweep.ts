@@ -64,6 +64,8 @@ function rows(group: string): Row[] {
   return out;
 }
 
+// Optional 5th argument: comma-separated column numbers (1-based) to run.
+const onlyCols = process.argv[5] ? process.argv[5].split(',').map(Number) : null;
 const group = process.argv[2] ?? 'main';
 const seeds = Number(process.argv[3] ?? '1');
 const content = (process.argv[4] ?? 'talking') as ContentKind;
@@ -85,7 +87,8 @@ const t0 = performance.now();
 const table: string[][] = [];
 for (const row of rowList) {
   const line: string[] = [row.name];
-  for (const col of conditions) {
+  for (const [ci, col] of conditions.entries()) {
+    if (onlyCols && !onlyCols.includes(ci + 1)) continue;
     const trials: TrialResult[] = [];
     for (let s = 0; s < seeds; s++) {
       const cfg: TrialConfig = {
@@ -115,7 +118,8 @@ for (const row of rowList) {
     ...table.map((l) => '| ' + l.join(' | ') + ' |'),
     '',
   ].join('\n');
-  writeFileSync(`sim-out/sweep-${group}-${content}.md`, md);
-  writeFileSync(`sim-out/sweep-${group}-${content}.json`, JSON.stringify(results.map((r) => ({ row: r.row, col: r.col, trials: r.trials.map((t) => ({ ...t, events: undefined })) })), null, 1));
+  const tag = onlyCols ? `aa${group}` : group;
+  writeFileSync(`sim-out/sweep-${tag}-${content}.md`, md);
+  writeFileSync(`sim-out/sweep-${tag}-${content}.json`, JSON.stringify(results.map((r) => ({ row: r.row, col: r.col, trials: r.trials.map((t) => ({ ...t, events: undefined })) })), null, 1));
 }
 console.log('done');

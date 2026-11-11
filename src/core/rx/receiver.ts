@@ -318,7 +318,8 @@ export class Receiver {
     for (const grid of this.grids) {
       for (const carrier of this.uniqueCarriers((p) => p.cols === grid.cols && p.rows === grid.rows)) {
         const windows = makeLockWindows(frames, carrier, perWindow, 3);
-        if (!windows.length) continue;
+        // One window is too little evidence to lock on; wait for more gap-free frames.
+        if (windows.length < 2) continue;
         for (let rot = 0; rot < 2; rot++) {
           const q0 = rotateQuad(cand.quad, rot);
           const { sx, sy } = subcellPixels(q0, grid.cols, grid.rows);

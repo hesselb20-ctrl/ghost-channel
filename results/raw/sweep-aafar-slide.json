@@ -1,0 +1,114 @@
+[
+ {
+  "row": "far luma 8.0%",
+  "col": "AE drift 10 % + 5 % drops",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.5000057033339018,
+    "tFirstPacket": 2.7005544280590756,
+    "tDecode": 4.30094726902854,
+    "packetsOk": 3,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0.04375,
+    "trueBits": 2880,
+    "throughputBps": 214.68364769529748,
+    "nominalBps": 340,
+    "coherence": 0.9990268808879663,
+    "snrDb": 12.78725624558293,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "far",
+    "seconds": 4.30094726902854,
+    "senderDroppedFrames": 3
+   }
+  ]
+ },
+ {
+  "row": "far chroma 4.0%",
+  "col": "AE drift 10 % + 5 % drops",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.5000057033339018,
+    "tFirstPacket": 2.7005544280590756,
+    "tDecode": 4.30094726902854,
+    "packetsOk": 3,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0.01827485380116959,
+    "trueBits": 2736,
+    "throughputBps": 214.68364769529748,
+    "nominalBps": 340,
+    "coherence": 0.9987475954017347,
+    "snrDb": 13.024231117982223,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "far",
+    "seconds": 4.30094726902854,
+    "senderDroppedFrames": 3
+   }
+  ]
+ },
+ {
+  "row": "far chroma 2.0%",
+  "col": "AE drift 10 % + 5 % drops",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.5000057033339018,
+    "tFirstPacket": 1.9000735440848373,
+    "tDecode": 3.4995377435148525,
+    "packetsOk": 3,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.0011574074074074073,
+    "trueBer": 0.0026041666666666665,
+    "trueBits": 2304,
+    "throughputBps": 272.0424349762151,
+    "nominalBps": 340,
+    "coherence": 0.9947803404827962,
+    "snrDb": 8.916266225200026,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "far",
+    "seconds": 3.4995377435148525,
+    "senderDroppedFrames": 3
+   }
+  ]
+ },
+ {
+  "row": "far chroma 1.0%",
+  "col": "AE drift 10 % + 5 % drops",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.5000057033339018,
+    "tFirstPacket": 1.9669036927296413,
+    "tDecode": 3.4995377435148525,
+    "packetsOk": 3,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.004629629629629629,
+    "trueBer": 0.009114583333333334,
+    "trueBits": 2304,
+    "throughputBps": 272.0424349762151,
+    "nominalBps": 340,
+    "coherence": 0.9871726130329627,
+    "snrDb": 6.3113828457473184,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "far",
+    "seconds": 3.4995377435148525,
+    "senderDroppedFrames": 3
+   }
+  ]
+ }
+]

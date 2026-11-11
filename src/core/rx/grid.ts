@@ -95,11 +95,33 @@ export interface LockWindow {
   wi: Float64Array;
 }
 
-/** Splits the newest frames into short windows, each with its own carrier fit. */
+/**
+ * Splits the newest frames into short windows, each with its own carrier fit.
+ * A window is only used if its frames follow each other without a gap. When
+ * the device is slow and frames get skipped, a window that spans a gap mixes
+ * two symbols; such windows made the right grid look bad and, seen on a live
+ * page, let a wrong grid win the lock.
+ */
 export function makeLockWindows(frames: Frame[], carrierHz: number, perWindow: number, count: number): LockWindow[] {
   const out: LockWindow[] = [];
+  if (frames.length < perWindow) return out;
+  const gaps: number[] = [];
+  for (let i = 1; i < frames.length; i++) gaps.push(frames[i].t - frames[i - 1].t);
+  const sorted = gaps.slice().sort((a, b) => a - b);
+  const nominal = sorted.length ? sorted[sorted.length >> 1] : 0;
   let end = frames.length;
   while (out.length < count && end - perWindow >= 0) {
+    let contiguous = true;
+    for (let i = end - perWindow + 1; i < end; i++) {
+      if (gaps[i - 1] > 1.6 * nominal) {
+        contiguous = false;
+        break;
+      }
+    }
+    if (!contiguous) {
+      end -= 1;
+      continue;
+    }
     const ids: number[] = [];
     for (let i = end - perWindow; i < end; i++) ids.push(i);
     const fit = carrierFit(

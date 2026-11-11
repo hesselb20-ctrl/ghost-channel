@@ -374,7 +374,7 @@ input[type='range'] {
 
 .kv {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 6px 16px;
   font-size: 13px;
 }
@@ -383,9 +383,10 @@ input[type='range'] {
 }
 .kv dd {
   margin: 0;
+  min-width: 0;
   font: 500 13px var(--mono);
   text-align: right;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 .note {
   font-size: 13px;
