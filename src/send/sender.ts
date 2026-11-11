@@ -147,6 +147,14 @@ export class GhostSender {
     const preset = this.preset;
     const tx = this.tx;
     if (!preset || !tx) return;
+    // A hidden tab gets a throttled callback rate. Nothing is on screen then,
+    // so do not count those gaps as dropped frames; start a fresh timeline
+    // when the tab comes back.
+    if (typeof document !== 'undefined' && document.hidden) {
+      this.lastTs = 0;
+      this.deltas.length = 0;
+      return;
+    }
 
     // Refresh rate: median of recent frame intervals, robust to the odd long frame.
     if (this.lastTs > 0) {

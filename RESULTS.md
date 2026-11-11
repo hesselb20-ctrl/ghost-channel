@@ -67,8 +67,8 @@ A 30 Hz square carrier (+d, -d on a 60 Hz display) aliases to 0 Hz on a 30 fps c
 | 1/250 s | 7 % | 1.00 |
 | 1/120 s | 15 % | 1.00 |
 | 1/60 s | 30 % | 1.00 |
-| 1/40 s | 44 % | 0.67 |
-| 1/30 s | 100 % | 0.00 |
+| 1/40 s | 44 % | 0.34 |
+| 1/30 s | 100 % | 0.01 |
 
 ### Simulator check: same grid and amplitude, different carriers
 
@@ -79,7 +79,7 @@ A 30 Hz square carrier (+d, -d on a 60 Hz display) aliases to 0 Hz on a 30 fps c
 | 30 Hz | 1/100 s | no | - | 0/0 | - |
 | 30 Hz | 1/40 s | no | - | 0/0 | - |
 | 25 Hz | 1/100 s | yes | 2.0 s | 4/4 | 0.0e+0 |
-| 25 Hz | 1/40 s | yes | 2.0 s | 4/4 | 2.2e-3 |
+| 25 Hz | 1/40 s | yes | 2.0 s | 4/4 | 8.8e-4 |
 | 20 Hz | 1/100 s | yes | 2.0 s | 4/4 | 0.0e+0 |
 | 20 Hz | 1/40 s | yes | 2.0 s | 4/4 | 0.0e+0 |
 | 15 Hz | 1/100 s | no | - | 0/0 | - |
@@ -100,8 +100,17 @@ Each cell: `trials decoded · time from first camera frame to the complete 60-by
 | far luma 8.0% | 1/1 · 2.7 s · BER 5e-4 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | **fail** · BER 4e-1 | **fail** · BER 5e-2 | **fail** · BER 8e-2 | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 4.3 s · BER 4e-2 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps |
 | far chroma 4.0% | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 1e-3 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | **fail** · BER 2e-1 | 1/1 · 2.7 s · BER 6e-3 · 3/3 pkts · 340 bps | **fail** · BER n/a | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 5e-4 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 2e-3 · 3/3 pkts · 340 bps | **fail** · BER 3e-1 | 1/1 · 4.3 s · BER 2e-2 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps |
 | far chroma 2.0% | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 5e-3 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 3e-3 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 6e-3 · 3/3 pkts · 340 bps | **fail** · BER n/a | **fail** · BER 5e-1 | **fail** · BER n/a | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 1e-2 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 2e-3 · 3/3 pkts · 340 bps | **fail** · BER 4e-1 | 1/1 · 3.5 s · BER 3e-3 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps |
+| far chroma 1.0% | 1/1 · 2.7 s · BER 4e-3 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 5e-3 · 3/3 pkts · 340 bps | **fail** · BER 5e-2 | **fail** · BER 6e-2 | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER 5e-1 | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 2e-3 · 3/3 pkts · 340 bps | **fail** · BER n/a | **fail** · BER 5e-2 | **fail** · BER 5e-1 | 1/1 · 3.5 s · BER 9e-3 · 3/3 pkts · 340 bps | **fail** · BER 5e-1 |
+| standard luma 8.0% | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 9e-4 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | **fail** · BER 3e-1 | **fail** · BER 1e-1 | **fail** · BER 2e-1 | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | 1/1 · 3.1 s · BER 5e-2 · 5/6 pkts · 517 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps |
+| standard chroma 4.0% | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | **fail** · BER 4e-1 | 1/1 · 1.9 s · BER 7e-3 · 4/4 pkts · 620 bps | **fail** · BER 5e-1 | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 2e-3 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | **fail** · BER n/a | 1/1 · 3.1 s · BER 5e-2 · 5/6 pkts · 517 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps |
+| standard chroma 2.0% | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 2e-3 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 7e-3 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 2e-2 · 4/4 pkts · 620 bps | **fail** · BER n/a | 1/1 · 1.9 s · BER 2e-2 · 4/4 pkts · 620 bps | **fail** · BER 5e-1 | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | **fail** · BER 5e-2 | 1/1 · 2.3 s · BER 2e-2 · 4/5 pkts · 496 bps | **fail** · BER n/a | 1/1 · 2.0 s · BER 5e-2 · 4/4 pkts · 620 bps | **fail** · BER n/a |
+| standard chroma 1.0% | 1/1 · 1.9 s · BER 2e-2 · 4/4 pkts · 620 bps | 1/1 · 5.9 s · BER 3e-2 · 8/14 pkts · 354 bps | **fail** · BER 8e-2 | **fail** · BER 9e-2 | **fail** · BER n/a | **fail** · BER 5e-1 | **fail** · BER 5e-1 | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 2e-3 · 4/4 pkts · 620 bps | **fail** · BER 2e-1 | **fail** · BER 1e-1 | **fail** · BER 5e-1 | 1/1 · 3.5 s · BER 5e-2 · 4/6 pkts · 413 bps | **fail** · BER n/a |
+| dense luma 8.0% | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | **fail** · BER n/a | **fail** · BER 2e-1 | **fail** · BER n/a | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 2e-3 · 3/3 pkts · 1680 bps | 1/1 · 0.9 s · BER 9e-2 · 3/4 pkts · 1260 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps |
+| dense chroma 4.0% | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 3e-3 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 4e-3 · 3/3 pkts · 1680 bps | **fail** · BER n/a | 1/1 · 0.9 s · BER 1e-2 · 3/4 pkts · 1260 bps | **fail** · BER n/a | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 1e-2 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 2e-3 · 3/3 pkts · 1680 bps | **fail** · BER n/a | 1/1 · 0.9 s · BER 8e-2 · 3/4 pkts · 1260 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps |
+| dense chroma 2.0% | 1/1 · 0.7 s · BER 2e-3 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 2e-3 · 3/3 pkts · 1680 bps | **fail** · BER 5e-2 | **fail** · BER 6e-2 | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | **fail** · BER 1e-1 | **fail** · BER 4e-2 | **fail** · BER 5e-1 | 1/1 · 0.9 s · BER 9e-2 · 3/4 pkts · 1260 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps |
+| dense chroma 1.0% | **fail** · BER 5e-2 | **fail** · BER 7e-2 | **fail** · BER 2e-1 | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER 5e-1 | **fail** · BER n/a | 1/1 · 0.7 s · BER 4e-3 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 2e-3 · 3/3 pkts · 1680 bps | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER 5e-1 | **fail** · BER 8e-2 | **fail** · BER n/a |
 
-32 of 42 trials recovered the payload; 0 delivered a payload that differed from what was sent.
+103 of 168 trials recovered the payload; 0 delivered a payload that differed from what was sent.
 
 ### Content: talking-head stand-in (mid-tones, slow motion)
 
@@ -109,8 +118,18 @@ Each cell: `trials decoded · time from first camera frame to the complete 60-by
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | far luma 8.0% | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | **fail** · BER 4e-1 | 1/1 · 2.7 s · BER 5e-4 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 4e-3 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 5e-4 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 3.5 s · BER 2e-3 · 3/3 pkts · 340 bps | **fail** · BER 5e-1 |
 | far chroma 4.0% | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 1e-3 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 4e-3 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 7e-3 · 3/3 pkts · 340 bps | **fail** · BER n/a | 1/1 · 2.7 s · BER 2e-2 · 3/3 pkts · 340 bps | **fail** · BER 6e-2 | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 1e-2 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 1e-3 · 3/3 pkts · 340 bps | **fail** · BER 3e-1 | 1/1 · 4.3 s · BER 2e-3 · 3/3 pkts · 340 bps | **fail** · BER 5e-1 |
+| far chroma 2.0% | 1/1 · 2.7 s · BER 6e-3 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 1e-2 · 3/3 pkts · 340 bps | **fail** · BER 7e-2 | **fail** · BER 7e-2 | **fail** · BER n/a | 1/1 · 8.3 s · BER 3e-2 · 3/7 pkts · 146 bps | **fail** · BER 2e-1 | 1/1 · 2.7 s · BER 0 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 5e-4 · 3/3 pkts · 340 bps | **fail** · BER n/a | **fail** · BER 5e-2 | **fail** · BER n/a | 1/1 · 3.5 s · BER 7e-2 · 3/4 pkts · 255 bps | 1/1 · 2.7 s · BER 1e-3 · 3/3 pkts · 340 bps |
+| far chroma 1.0% | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | 1/1 · 2.7 s · BER 4e-3 · 3/3 pkts · 340 bps | 1/1 · 2.7 s · BER 9e-3 · 3/3 pkts · 340 bps | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER 5e-1 | **fail** · BER n/a | **fail** · BER 5e-1 |
+| standard luma 8.0% | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | **fail** · BER n/a | 1/1 · 1.9 s · BER 1e-3 · 4/4 pkts · 620 bps | 1/1 · 2.3 s · BER 2e-2 · 4/5 pkts · 496 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 3.5 s · BER 5e-2 · 5/6 pkts · 517 bps | **fail** · BER 5e-1 |
+| standard chroma 4.0% | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 1e-2 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 2e-2 · 4/4 pkts · 620 bps | **fail** · BER n/a | 1/1 · 2.7 s · BER 3e-2 · 4/6 pkts · 413 bps | **fail** · BER 1e-1 | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 0 · 4/4 pkts · 620 bps | **fail** · BER 6e-2 | 1/1 · 3.9 s · BER 2e-2 · 7/9 pkts · 482 bps | **fail** · BER n/a | 1/1 · 2.0 s · BER 5e-2 · 4/4 pkts · 620 bps | **fail** · BER 5e-1 |
+| standard chroma 2.0% | 1/1 · 2.3 s · BER 2e-2 · 4/5 pkts · 496 bps | 1/1 · 3.1 s · BER 3e-2 · 4/7 pkts · 354 bps | **fail** · BER 9e-2 | **fail** · BER 1e-1 | **fail** · BER n/a | **fail** · BER 7e-2 | **fail** · BER 2e-1 | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps | 1/1 · 1.9 s · BER 2e-3 · 4/4 pkts · 620 bps | **fail** · BER 2e-1 | **fail** · BER 1e-1 | **fail** · BER n/a | 1/1 · 3.1 s · BER 5e-2 · 4/6 pkts · 413 bps | 1/1 · 1.9 s · BER 4e-4 · 4/4 pkts · 620 bps |
+| standard chroma 1.0% | **fail** · BER 2e-1 | **fail** · BER 2e-1 | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | 1/1 · 4.3 s · BER 3e-2 · 5/10 pkts · 310 bps | **fail** · BER 4e-2 | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER 5e-1 | **fail** · BER 2e-1 | **fail** · BER n/a |
+| dense luma 8.0% | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | **fail** · BER n/a | 1/1 · 0.7 s · BER 4e-3 · 3/3 pkts · 1680 bps | 1/1 · 0.9 s · BER 5e-2 · 3/4 pkts · 1260 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 5e-3 · 3/3 pkts · 1680 bps | 1/1 · 0.9 s · BER 9e-2 · 3/4 pkts · 1260 bps | **fail** · BER n/a |
+| dense chroma 4.0% | 1/1 · 0.7 s · BER 2e-3 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 7e-3 · 3/3 pkts · 1680 bps | **fail** · BER 6e-2 | **fail** · BER 8e-2 | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER 2e-1 | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 0 · 3/3 pkts · 1680 bps | **fail** · BER 1e-1 | **fail** · BER 6e-2 | **fail** · BER n/a | 1/1 · 0.9 s · BER 8e-2 · 3/4 pkts · 1260 bps | **fail** · BER n/a |
+| dense chroma 2.0% | **fail** · BER 6e-2 | **fail** · BER 8e-2 | **fail** · BER 2e-1 | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER 2e-1 | **fail** · BER n/a | 1/1 · 0.7 s · BER 2e-3 · 3/3 pkts · 1680 bps | 1/1 · 0.7 s · BER 2e-3 · 3/3 pkts · 1680 bps | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER 9e-2 | **fail** · BER n/a |
+| dense chroma 1.0% | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER 7e-2 | **fail** · BER 8e-2 | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a | **fail** · BER n/a |
 
-22 of 28 trials recovered the payload; 0 delivered a payload that differed from what was sent.
+78 of 168 trials recovered the payload; 0 delivered a payload that differed from what was sent.
 
 ## 3. Join anytime (`npm run sim:join`)
 
@@ -123,6 +142,13 @@ A lossless receiver that needed exactly K packets would take 156 s.
 |---|---|---|---|---|---|---|---|
 | 1 | yes | all | 156.9 s | 784 / 0 | 1.003 | 5.3e-4 | 1680 bps |
 | 2 | yes | all | 157.6 s | 787 / 0 | 1.006 | 5.8e-4 | 1673 bps |
+
+Preset standard: 32768 bytes = 1059 blocks of 31 B, one packet every 0.40 s.
+A lossless receiver that needed exactly K packets would take 424 s.
+
+| trial | decoded | bytes correct | time to full file | packets ok / failed | overhead vs K | raw BER | delivered rate |
+|---|---|---|---|---|---|---|---|
+| 1 | yes | all | 426.1 s | 1064 / 0 | 1.005 | 2.0e-4 | 617 bps |
 
 ## 4. Real video codecs (`npm run sim:codec`)
 
@@ -183,3 +209,59 @@ Pilot check on noise only (complex Gaussian cells, six windows, 200 trials)
 | 24×14 @ 20 Hz | 31 | 0.28 | 0.32 | 0.34 |
 | 12×7 @ 10 Hz | 12 | 0.43 | 0.49 | 0.52 |
 | 16×9 @ 40 Hz | 18 | 0.38 | 0.44 | 0.44 |
+
+## 6. Individual runs quoted in the README
+
+### A 61-byte link, 0.4 m, colour axis
+
+The sweep sends 60 random bytes as a file, which costs 46 bytes of name and type on top. A link of the same length is a smaller object and needs fewer packets.
+
+| run | decoded | time | packets ok / failed | raw BER | locked via |
+|---|---|---|---|---|---|
+| far, slide, 4 % | yes | 3.3 s | 3 / 0 | 0.0e+0 | bright |
+| far, talking, 4 % | yes | 3.3 s | 3 / 0 | 0.0e+0 | bright |
+| far, slide, 2 % | yes | 3.3 s | 3 / 0 | 8.7e-4 | energy |
+| far, talking, 2 % | yes | 3.3 s | 3 / 0 | 0.0e+0 | energy |
+| standard, slide, 4 % | yes | 1.7 s | 3 / 0 | 0.0e+0 | energy |
+| standard, talking, 4 % | yes | 1.7 s | 3 / 0 | 0.0e+0 | energy |
+| standard, slide, 2 % | yes | 1.7 s | 3 / 0 | 0.0e+0 | bright |
+| standard, talking, 2 % | yes | 1.7 s | 3 / 0 | 5.0e-4 | energy |
+| dense, slide, 4 % | yes | 0.5 s | 2 / 0 | 0.0e+0 | bright |
+| dense, talking, 4 % | yes | 0.5 s | 2 / 0 | 0.0e+0 | energy |
+| dense, slide, 2 % | yes | 0.5 s | 2 / 0 | 0.0e+0 | bright |
+| dense, talking, 2 % | yes | 0.5 s | 2 / 0 | 2.5e-3 | bright |
+
+### Dark cinematic content, standard preset, 0.4 m
+
+| run | decoded | time | packets ok / failed | raw BER | locked via |
+|---|---|---|---|---|---|
+| colour 4 % | no | - | 0 / 0 | - | - |
+| brightness 4 % | yes | 2.1 s | 4 / 0 | 1.2e-3 | energy |
+| colour 8 % | yes | 2.1 s | 4 / 0 | 4.0e-4 | energy |
+| brightness 8 % | yes | 2.1 s | 4 / 0 | 0.0e+0 | energy |
+| colour 4 %, shadow boost 2 % | yes | 2.1 s | 4 / 0 | 0.0e+0 | energy |
+| brightness 4 %, shadow boost 2 % | yes | 2.1 s | 4 / 0 | 0.0e+0 | energy |
+| colour 4 %, corners placed by hand (4 px error) | no | - | 3 / 18 | 3.7e-2 | manual |
+
+### Room light flickering at 100 Hz (30 % depth), 1/250 s exposure, standard preset, colour 4 %, talking-head content
+
+| run | decoded | time | packets ok / failed | raw BER | locked via |
+|---|---|---|---|---|---|
+| dim room (background 5 % of white) | yes | 2.1 s | 4 / 0 | 0.0e+0 | bright |
+| bright wall behind the screen (20 % of white) | no | - | 0 / 0 | - | bright |
+| bright wall, corners placed by hand (4 px error) | yes | 2.1 s | 4 / 0 | 0.0e+0 | manual |
+
+### 2 m with the far preset, brightness 8 %, talking-head content
+
+| run | decoded | time | packets ok / failed | raw BER | locked via |
+|---|---|---|---|---|---|
+| 1280×720 camera | yes | 3.3 s | 3 / 0 | 8.7e-4 | energy |
+| 1920×1080 camera (blur σ 1.9 px, noise 3.5) | yes | 3.3 s | 3 / 0 | 4.0e-2 | energy |
+
+### Sender frame drops (simulated): standard preset, colour 4 %, slide content, 0.4 m
+
+| run | decoded | time | packets ok / failed | raw BER | locked via |
+|---|---|---|---|---|---|
+| 1 % of display frames repeated | yes | 8.9 s | 21 / 0 | 9.0e-5 | bright |
+| 5 % of display frames repeated | yes | 10.5 s | 23 / 1 | 7.0e-3 | bright |
+| 15 % of display frames repeated | no | - | 18 / 13 | 6.8e-2 | energy |

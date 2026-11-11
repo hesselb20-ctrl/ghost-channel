@@ -1,0 +1,1570 @@
+[
+ {
+  "row": "standard luma 8.0%",
+  "col": "0.4 m head-on",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.8673324163897604,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 725.3803574596626,
+    "nominalBps": 620,
+    "coherence": 0.9882742201168817,
+    "snrDb": 14.595525541212112,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.8673324163897604,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "0.4 m, 30° off-axis",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.8673324163897604,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 725.3803574596626,
+    "nominalBps": 620,
+    "coherence": 0.9803434346900158,
+    "snrDb": 14.639574149687643,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.8673324163897604,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "1 m head-on (720p)",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.000992063492063492,
+    "trueBer": 0.0008818342151675485,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9847643598053033,
+    "snrDb": 13.41093664797317,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "1 m, 30° (720p)",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9855671261137048,
+    "snrDb": 12.536087368153488,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "2 m head-on (720p)",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 8.901467074435102,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 1,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.2748015873015873,
+    "trueBits": 1008,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0.6480298139516729,
+    "snrDb": 11.640272217223256,
+    "lockAttempts": 26,
+    "detection": "energy",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "handheld 3 px shake",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 0.8331476359631935,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.09640522875816994,
+    "trueBits": 4284,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0,
+    "snrDb": 0,
+    "lockAttempts": 20,
+    "detection": "bright",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "1 m handheld (720p)",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 1.1672922519920406,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.15165631469979296,
+    "trueBits": 5796,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0,
+    "snrDb": 0,
+    "lockAttempts": 10,
+    "detection": "bright",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "60 fps camera",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4164309692965268,
+    "tFirstPacket": 0.7172088393479062,
+    "tDecode": 1.9175379035674291,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 660.8456581954442,
+    "nominalBps": 620,
+    "coherence": 0.984273799146869,
+    "snrDb": 19.39426188994855,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9175379035674291,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "120 Hz display",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9892911366069465,
+    "snrDb": 17.07853945660289,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "dim: 1/30 s exposure",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220632,
+    "tFirstPacket": 0.6667079716159677,
+    "tDecode": 1.8673324163897602,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 725.3803574596627,
+    "nominalBps": 620,
+    "coherence": 0.9841007902550849,
+    "snrDb": 15.955237855193907,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.8673324163897602,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "noise x2",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.8673324163897604,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.000496031746031746,
+    "trueBer": 0.0004409171075837742,
+    "trueBits": 2268,
+    "throughputBps": 725.3803574596626,
+    "nominalBps": 620,
+    "coherence": 0.9869616162924224,
+    "snrDb": 14.237000078385918,
+    "lockAttempts": 2,
+    "detection": "energy",
+    "presetDetected": "standard",
+    "seconds": 1.8673324163897604,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "JPEG q60",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.000496031746031746,
+    "trueBer": 0.0004409171075837742,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9835695667678911,
+    "snrDb": 12.159766108793917,
+    "lockAttempts": 2,
+    "detection": "energy",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "AE drift 10 % + 5 % drops",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.5000057033339018,
+    "tFirstPacket": 0.7324903863802528,
+    "tDecode": 3.1004377421283724,
+    "packetsOk": 5,
+    "packetsBad": 1,
+    "packetSuccess": 0.8333333333333334,
+    "rawBer": 0,
+    "trueBer": 0.04903628117913832,
+    "trueBits": 3528,
+    "throughputBps": 381.47507229601723,
+    "nominalBps": 620,
+    "coherence": 0.9954845718270293,
+    "snrDb": 17.928674519262294,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 3.1004377421283724,
+    "senderDroppedFrames": 3
+   }
+  ]
+ },
+ {
+  "row": "standard luma 8.0%",
+  "col": "room light flicker 100 Hz",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220632,
+    "tFirstPacket": 0.7343690747464838,
+    "tDecode": 1.9001913270363735,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480654,
+    "nominalBps": 620,
+    "coherence": 0.9888518993674644,
+    "snrDb": 15.325586775902567,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363735,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "0.4 m head-on",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.8673324163897604,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.000496031746031746,
+    "trueBer": 0.0004409171075837742,
+    "trueBits": 2268,
+    "throughputBps": 725.3803574596626,
+    "nominalBps": 620,
+    "coherence": 0.9863590825734446,
+    "snrDb": 13.569712733010714,
+    "lockAttempts": 2,
+    "detection": "energy",
+    "presetDetected": "standard",
+    "seconds": 1.8673324163897604,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "0.4 m, 30° off-axis",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.8673324163897604,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 725.3803574596626,
+    "nominalBps": 620,
+    "coherence": 0.9788590036382093,
+    "snrDb": 14.089545729827185,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.8673324163897604,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "1 m head-on (720p)",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.7343690747464837,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0.0004409171075837742,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9787689252998845,
+    "snrDb": 11.629388981072795,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "1 m, 30° (720p)",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0.0004409171075837742,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9810343040114798,
+    "snrDb": 12.393732954691721,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "2 m head-on (720p)",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 7.5675220822944445,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.38492063492063494,
+    "trueBits": 1260,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0.5106422194406518,
+    "snrDb": 3.454937463851328,
+    "lockAttempts": 22,
+    "detection": "energy",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "handheld 3 px shake",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.7343690747464837,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.00744047619047619,
+    "trueBer": 0.006613756613756613,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9384703559918985,
+    "snrDb": 6.085258356961738,
+    "lockAttempts": 2,
+    "detection": "energy",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "1 m handheld (720p)",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 6.167102822273228,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 1,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.5198412698412699,
+    "trueBits": 2268,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0.4999148278505558,
+    "snrDb": -10.833579665935666,
+    "lockAttempts": 29,
+    "detection": "bright",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "60 fps camera",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4164309692965268,
+    "tFirstPacket": 0.7172088393479062,
+    "tDecode": 1.9175379035674291,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 660.8456581954442,
+    "nominalBps": 620,
+    "coherence": 0.9836533226329255,
+    "snrDb": 19.346209968045038,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9175379035674291,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "120 Hz display",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9875373569657163,
+    "snrDb": 17.074545462095745,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "dim: 1/30 s exposure",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220632,
+    "tFirstPacket": 0.6994205771515726,
+    "tDecode": 1.8673324163897602,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.001488095238095238,
+    "trueBer": 0.002204585537918871,
+    "trueBits": 2268,
+    "throughputBps": 725.3803574596627,
+    "nominalBps": 620,
+    "coherence": 0.9606163100605899,
+    "snrDb": 10.647213883788464,
+    "lockAttempts": 1,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.8673324163897602,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "noise x2",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.000496031746031746,
+    "trueBer": 0.0004409171075837742,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9762156980440523,
+    "snrDb": 10.781785123597983,
+    "lockAttempts": 2,
+    "detection": "energy",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "JPEG q60",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 0.8331476359631935,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": null,
+    "trueBits": 0,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0.5350812708557983,
+    "snrDb": 3.2660074611448007,
+    "lockAttempts": 6,
+    "detection": "energy",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "AE drift 10 % + 5 % drops",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.5000057033339018,
+    "tFirstPacket": 0.7324903863802528,
+    "tDecode": 3.1004377421283724,
+    "packetsOk": 5,
+    "packetsBad": 1,
+    "packetSuccess": 0.8333333333333334,
+    "rawBer": 0,
+    "trueBer": 0.050170068027210885,
+    "trueBits": 3528,
+    "throughputBps": 381.47507229601723,
+    "nominalBps": 620,
+    "coherence": 0.9926614927097672,
+    "snrDb": 15.871665672851847,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 3.1004377421283724,
+    "senderDroppedFrames": 3
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 4.0%",
+  "col": "room light flicker 100 Hz",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220632,
+    "tFirstPacket": 0.6994205771515726,
+    "tDecode": 1.9001913270363735,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480654,
+    "nominalBps": 620,
+    "coherence": 0.9876785936320549,
+    "snrDb": 15.335915781406896,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363735,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "0.4 m head-on",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.000496031746031746,
+    "trueBer": 0.0004409171075837742,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.982382717961203,
+    "snrDb": 10.840210609318808,
+    "lockAttempts": 2,
+    "detection": "energy",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "0.4 m, 30° off-axis",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.8673324163897604,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.00248015873015873,
+    "trueBer": 0.002204585537918871,
+    "trueBits": 2268,
+    "throughputBps": 725.3803574596626,
+    "nominalBps": 620,
+    "coherence": 0.9627509941996614,
+    "snrDb": 11.373823865365813,
+    "lockAttempts": 2,
+    "detection": "energy",
+    "presetDetected": "standard",
+    "seconds": 1.8673324163897604,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "1 m head-on (720p)",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.7343690747464837,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.00744047619047619,
+    "trueBer": 0.007495590828924162,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9644547496915633,
+    "snrDb": 9.042202385339667,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "1 m, 30° (720p)",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.014384920634920634,
+    "trueBer": 0.015432098765432098,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9666301624264054,
+    "snrDb": 8.315515401866813,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "2 m head-on (720p)",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": null,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": null,
+    "trueBits": 0,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0,
+    "snrDb": 0,
+    "lockAttempts": 0,
+    "detection": null,
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "handheld 3 px shake",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.8331476359631935,
+    "tFirstPacket": 0.8660846651177021,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.01984126984126984,
+    "trueBer": 0.018077601410934743,
+    "trueBits": 2268,
+    "throughputBps": 929.6713979933616,
+    "nominalBps": 620,
+    "coherence": 0.8851523907787143,
+    "snrDb": 6.940803836353777,
+    "lockAttempts": 3,
+    "detection": "energy",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "1 m handheld (720p)",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 6.167102822273228,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 1,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.5138888888888888,
+    "trueBits": 3024,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0.5520135490585081,
+    "snrDb": -9.822265010919946,
+    "lockAttempts": 36,
+    "detection": "bright",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "60 fps camera",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4164309692965268,
+    "tFirstPacket": 0.7172088393479062,
+    "tDecode": 1.9175379035674291,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 660.8456581954442,
+    "nominalBps": 620,
+    "coherence": 0.9821003144662663,
+    "snrDb": 17.72436905753206,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9175379035674291,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "120 Hz display",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0,
+    "trueBer": 0,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9857156889321844,
+    "snrDb": 15.405617176556536,
+    "lockAttempts": 2,
+    "detection": "energy",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "dim: 1/30 s exposure",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 0.4997740178220632,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.048859126984126984,
+    "trueBits": 4032,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0,
+    "snrDb": 0,
+    "lockAttempts": 18,
+    "detection": "bright",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "noise x2",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 2.2997373538601726,
+    "packetsOk": 4,
+    "packetsBad": 1,
+    "packetSuccess": 0.8,
+    "rawBer": 0.018353174603174604,
+    "trueBer": 0.01984126984126984,
+    "trueBits": 2772,
+    "throughputBps": 551.1223368490862,
+    "nominalBps": 620,
+    "coherence": 0.9645070879720061,
+    "snrDb": 5.923619597718643,
+    "lockAttempts": 1,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 2.2997373538601726,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "JPEG q60",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": null,
+    "trueBits": 0,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0.8113086205903215,
+    "snrDb": -2.4679593904935397,
+    "lockAttempts": 2,
+    "detection": "energy",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "AE drift 10 % + 5 % drops",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.5000057033339018,
+    "tFirstPacket": 0.7324903863802528,
+    "tDecode": 1.9669036927296413,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.005952380952380952,
+    "trueBer": 0.04938271604938271,
+    "trueBits": 2268,
+    "throughputBps": 676.2569770844361,
+    "nominalBps": 620,
+    "coherence": 0.9764595113072045,
+    "snrDb": 8.418229901148266,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9669036927296413,
+    "senderDroppedFrames": 3
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 2.0%",
+  "col": "room light flicker 100 Hz",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 0.4997740178220632,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": null,
+    "trueBits": 0,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0.876351139091501,
+    "snrDb": 30.95387762565979,
+    "lockAttempts": 2,
+    "detection": "energy",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "0.4 m head-on",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.9001913270363737,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.024305555555555556,
+    "trueBer": 0.021604938271604937,
+    "trueBits": 2268,
+    "throughputBps": 708.3602819480653,
+    "nominalBps": 620,
+    "coherence": 0.9484344015831123,
+    "snrDb": 6.736724191145644,
+    "lockAttempts": 1,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9001913270363737,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "0.4 m, 30° off-axis",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 5.900395331788272,
+    "packetsOk": 8,
+    "packetsBad": 6,
+    "packetSuccess": 0.5714285714285714,
+    "rawBer": 0.023809523809523808,
+    "trueBer": 0.026409414340448824,
+    "trueBits": 7308,
+    "throughputBps": 183.6825695285561,
+    "nominalBps": 620,
+    "coherence": 0.9519654443757932,
+    "snrDb": 6.7095987505683965,
+    "lockAttempts": 1,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 5.900395331788272,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "1 m head-on (720p)",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.08110119047619048,
+    "trueBits": 4032,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0,
+    "snrDb": 0,
+    "lockAttempts": 18,
+    "detection": "bright",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "1 m, 30° (720p)",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.09424603174603174,
+    "trueBits": 4032,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0,
+    "snrDb": 0,
+    "lockAttempts": 18,
+    "detection": "bright",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "2 m head-on (720p)",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": null,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": null,
+    "trueBits": 0,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0,
+    "snrDb": 0,
+    "lockAttempts": 0,
+    "detection": null,
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "handheld 3 px shake",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 2.83369264984268,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.5026455026455027,
+    "trueBits": 2268,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0,
+    "snrDb": 0,
+    "lockAttempts": 30,
+    "detection": "bright",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "1 m handheld (720p)",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 6.167102822273228,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.5104617604617605,
+    "trueBits": 2772,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0.6055867183083953,
+    "snrDb": -0.22052358272851347,
+    "lockAttempts": 18,
+    "detection": "bright",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "60 fps camera",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4164309692965268,
+    "tFirstPacket": 0.7172088393479062,
+    "tDecode": 1.9175379035674291,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.000496031746031746,
+    "trueBer": 0.0004409171075837742,
+    "trueBits": 2268,
+    "throughputBps": 660.8456581954442,
+    "nominalBps": 620,
+    "coherence": 0.9785912175598315,
+    "snrDb": 14.387096845328127,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.9175379035674291,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "120 Hz display",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": 0.6994205771515725,
+    "tDecode": 1.8673324163897604,
+    "packetsOk": 4,
+    "packetsBad": 0,
+    "packetSuccess": 1,
+    "rawBer": 0.00248015873015873,
+    "trueBer": 0.002204585537918871,
+    "trueBits": 2268,
+    "throughputBps": 725.3803574596626,
+    "nominalBps": 620,
+    "coherence": 0.9796125582165696,
+    "snrDb": 11.183196557890845,
+    "lockAttempts": 2,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 1.8673324163897604,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "dim: 1/30 s exposure",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 4.167637680559922,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.1931216931216931,
+    "trueBits": 4536,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0,
+    "snrDb": 0,
+    "lockAttempts": 18,
+    "detection": "bright",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "noise x2",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 0.8331476359631935,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.13725490196078433,
+    "trueBits": 4284,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0,
+    "snrDb": 0,
+    "lockAttempts": 18,
+    "detection": "bright",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "JPEG q60",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 0.4997740178220631,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": 0.4947089947089947,
+    "trueBits": 4536,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0.6008146296434332,
+    "snrDb": -3.407372685938438,
+    "lockAttempts": 8,
+    "detection": "energy",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "AE drift 10 % + 5 % drops",
+  "trials": [
+   {
+    "decoded": true,
+    "payloadOk": true,
+    "tLock": 0.5000057033339018,
+    "tFirstPacket": 1.9000735440848373,
+    "tDecode": 3.5333971709322434,
+    "packetsOk": 4,
+    "packetsBad": 2,
+    "packetSuccess": 0.6666666666666666,
+    "rawBer": 0.023313492063492064,
+    "trueBer": 0.04785247432306256,
+    "trueBits": 4284,
+    "throughputBps": 327.02669951973144,
+    "nominalBps": 620,
+    "coherence": 0.9528437165145759,
+    "snrDb": 6.622933321709077,
+    "lockAttempts": 1,
+    "detection": "bright",
+    "presetDetected": "standard",
+    "seconds": 3.5333971709322434,
+    "senderDroppedFrames": 3
+   }
+  ]
+ },
+ {
+  "row": "standard chroma 1.0%",
+  "col": "room light flicker 100 Hz",
+  "trials": [
+   {
+    "decoded": false,
+    "payloadOk": false,
+    "tLock": 0.4997740178220632,
+    "tFirstPacket": null,
+    "tDecode": null,
+    "packetsOk": 0,
+    "packetsBad": 0,
+    "packetSuccess": 0,
+    "rawBer": null,
+    "trueBer": null,
+    "trueBits": 0,
+    "throughputBps": 0,
+    "nominalBps": 620,
+    "coherence": 0.8748028026784525,
+    "snrDb": 31.104337203737945,
+    "lockAttempts": 2,
+    "detection": "energy",
+    "presetDetected": null,
+    "seconds": 8.968033301966315,
+    "senderDroppedFrames": 0
+   }
+  ]
+ }
+]

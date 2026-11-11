@@ -19,8 +19,8 @@ A frame pair is a 30 Hz carrier. Sampled at 30 fps it aliases to 0 Hz: each sens
 | 1/250 s | 7 % | 1.00 |
 | 1/120 s | 15 % | 1.00 |
 | 1/60 s | 30 % | 1.00 |
-| 1/40 s | 44 % | 0.33 |
-| 1/30 s | 100 % | 0.00 |
+| 1/40 s | 44 % | 0.34 |
+| 1/30 s | 100 % | 0.01 |
 
 1. The rolling shutter turns the phase dependence into horizontal **null bands** across the image.
 2. With display and camera clocks this close, the bands barely move (a 59.94 Hz panel against a 30.00 fps camera gives one pass every 33 s; two nominally equal clocks can sit still for minutes), so the same cells stay dead and no amount of fountain coding recovers them.
@@ -51,7 +51,7 @@ Simulator check, same 16×9 grid, 200 ms symbols, colour axis at 4 %, grey conte
 | carrier | 1/100 s exposure | 1/40 s exposure |
 |---|---|---|
 | 30 Hz (frame pairs) | never locks | never locks |
-| 25 Hz | decoded in 2.0 s, raw BER 0 | decoded in 2.0 s, raw BER 2e-3 |
+| 25 Hz | decoded in 2.0 s, raw BER 0 | decoded in 2.0 s, raw BER 9e-4 |
 | **20 Hz** | decoded in 2.0 s, raw BER 0 | decoded in 2.0 s, raw BER 0 |
 | 15 Hz | never locks | never locks |
 | 10 Hz | decoded in 2.0 s, raw BER 0 | decoded in 2.0 s, raw BER 0 |
@@ -137,5 +137,5 @@ What the simulator does not model: demosaicing and chroma subsampling in the cam
 
 - **No physical device has been tested.** Milestones 2–5 of the brief need a phone and a screen in the same room.
 - **The invisibility threshold is unmeasured.** It needs human viewers and the blind test page.
-- **Dark content.** Proportional modulation on near-black pixels is below camera noise at stealth amplitudes; it needs the shadow-boost control or a higher amplitude (README, known limitations).
+- **Dark content.** Proportional modulation leaves little signal on near-black pixels. In the simulator a dark scene decodes at 4 % on the brightness axis; the colour axis needs 8 % or the shadow-boost control (README, known limitations).
 - **Strong room-light flicker with a short exposure** defeats automatic screen detection in the simulator; manual corner placement works.
