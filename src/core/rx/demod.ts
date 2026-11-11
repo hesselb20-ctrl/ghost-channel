@@ -412,18 +412,18 @@ export class Demodulator {
         let rss = 0;
         let dof = 0;
         let cnt = 0;
+        let scored = 0;
         let valid = true;
         const i0 = Math.ceil((oldest - tau) / this.Ts);
         for (let i = i0; ; i++) {
           const start = tau + i * this.Ts;
           if (start + this.Ts > newest) break;
           const idx = this.framesIn(ring, start + this.guard, start + this.Ts - this.guard);
-          if (idx.length < 3) {
-            valid = false;
-            break;
-          }
-          // Three frames fit exactly and leave no residual to score.
-          if (idx.length === 3) continue;
+          // Three frames fit exactly and leave no residual to score; fewer
+          // means frames were skipped there. Either way the window says
+          // nothing about this candidate, so it is passed over.
+          if (idx.length <= 3) continue;
+          scored++;
           const fit = carrierFit(
             idx.map((k) => ring.t[k]),
             this.preset.carrierHz,
@@ -458,7 +458,7 @@ export class Demodulator {
             cnt++;
           }
         }
-        scores[j] = valid && cnt > 0 && dof > 0 ? amp / cnt / (rss / dof + 1e-4) : 0;
+        scores[j] = valid && scored >= 2 && cnt > 0 && dof > 0 ? amp / cnt / (rss / dof + 1e-4) : 0;
       }
       let mx = 0;
       for (let j = 0; j < cand; j++) mx = Math.max(mx, scores[j]);

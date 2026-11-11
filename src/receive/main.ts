@@ -146,7 +146,10 @@ async function pump(meta: FrameMeta | null): Promise<void> {
     src = 'wall clock';
   }
   const t = clock.next(raw, src);
-  if (inFlight >= 2) {
+  // Up to five frames may wait for the worker. A stall shorter than about
+  // 150 ms then costs no frames; only a long one (a full re-acquisition on a
+  // slow device) does.
+  if (inFlight >= 5) {
     skipped++;
     return;
   }

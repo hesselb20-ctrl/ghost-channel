@@ -245,7 +245,7 @@ export class Receiver {
     const lead = this.winner ?? this.bestDemod();
     const sinceGood = frame.t - Math.max(lead?.lastGoodSymbolTime ?? -Infinity, this.tLockLast);
     const everGood = (lead?.lastGoodSymbolTime ?? -Infinity) > -Infinity;
-    const patience = everGood ? Math.max(1.6, 5 * (lead?.Ts ?? 0.2)) : Math.max(1.2, 4.5 * Math.max(...this.demods.map((d) => d.Ts)));
+    const patience = everGood ? Math.max(1.6, 5 * (lead?.Ts ?? 0.2)) : Math.max(3, 8 * Math.max(...this.demods.map((d) => d.Ts)));
     if (sinceGood > patience) {
       this.log(`lock dropped (no coherent pilots for ${sinceGood.toFixed(1)} s)`);
       if (this.quad && !everGood) this.rejected.push({ quad: cloneQuad(this.quad), until: frame.t + 12 });
@@ -299,6 +299,10 @@ export class Receiver {
     const perWindow = Math.max(3, Math.min(8, Math.round(this.fps * 0.1)));
     if (frames.length < 3 * perWindow) return null;
     if (!quadIsSane(cand.quad, f0.w, f0.h)) return null;
+    // The pilot check needs several windows of consecutive frames; with one or
+    // two, a dozen pilots can be lined up by chance. Right after a slow
+    // acquisition attempt the buffer has a hole, so wait for it to refill.
+    if (makeLockWindows(frames, this.presets[0].carrierHz, perWindow, 6).length < 4) return null;
     this.lockAttempts++;
     const planes: PlaneName[] = cand.kind === 'energy' ? [cand.plane] : ['chroma', 'luma'];
 
@@ -345,13 +349,19 @@ export class Receiver {
     // the pilots, and measure how convincing the result is.
     let best: LockChoice | null = null;
     for (const h of hyps.slice(0, 2)) {
-      if (h.score < 0.4 * hyps[0].score) break;
+      if (h.score < 0.7 * hyps[0].score) break;
       const { grid, metric } = h;
-      let res = searchCorners(metric, h.quad, grid.cols, grid.rows, 3, 0.5);
-      res = refineQuad(metric, res.quad, grid.cols, grid.rows, false);
+      const layout = makeLayout(this.presets.find((p) => p.cols === grid.cols && p.rows === grid.rows)!);
+      let res: { quad: Quad; score: number } = { quad: h.quad, score: h.score };
+      // The per-corner search costs over a thousand metric evaluations. It is
+      // only needed when detection put a corner several quadrants off; if the
+      // pilots already agree on the quad from stage 1, it is skipped.
+      if (pilotCheck(layout, h.pilotMetric.phasors(h.quad)).coherence < 0.85) {
+        res = searchCorners(metric, h.quad, grid.cols, grid.rows, 3, 0.5);
+        res = refineQuad(metric, res.quad, grid.cols, grid.rows, false);
+      }
       // The energy metric has near-equal maxima one cell away and weaker ones
       // half a cell away. Only the pilots can tell them apart.
-      const layout = makeLayout(this.presets.find((p) => p.cols === grid.cols && p.rows === grid.rows)!);
       const shifts: { quad: Quad; m: number }[] = [];
       for (let dv = -2; dv <= 2; dv++) {
         for (let du = -2; du <= 2; du++) {
