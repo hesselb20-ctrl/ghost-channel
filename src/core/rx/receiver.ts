@@ -8,7 +8,7 @@ import { FountainDecoder } from '../fountain.ts';
 import { cloneQuad, rotateQuad, type Quad } from '../homography.ts';
 import { makeLayout } from '../layout.ts';
 import { PRESETS, type Preset } from '../presets.ts';
-import { Demodulator, pilotCheck, type CellRing, type PacketInfo, type SymbolDebug } from './demod.ts';
+import { Demodulator, pilotCheck, type CellRing, type PacketInfo, type PilotCheck, type SymbolDebug } from './demod.ts';
 import { Detector, type Detection } from './detect.ts';
 import { smoothPlane, type Frame, type PlaneName } from './frame.ts';
 import {
@@ -73,6 +73,8 @@ interface GridKey {
 }
 
 interface LockChoice {
+  carrier: number;
+  pilots: PilotCheck;
   quad: Quad;
   contrast: number;
   grid: GridKey;
@@ -110,6 +112,8 @@ export class Receiver {
   private lockAttempts = 0;
   private detection: string | null = null;
   private manualQuad: Quad | null = null;
+  /** Quads whose lock produced no packets; not retried until the time given. */
+  private rejected: { quad: Quad; until: number }[] = [];
   private okAtLock = 0;
   private tLastPacket = 0;
 
@@ -140,6 +144,7 @@ export class Receiver {
    */
   setManualQuad(q: Quad | null): void {
     this.manualQuad = q ? cloneQuad(q) : null;
+    this.rejected = [];
   }
 
   /** Forget the lock and any partial object; keep looking. */
@@ -228,6 +233,7 @@ export class Receiver {
       ring.chroma.shift();
     }
     for (const d of this.demods) d.process(ring);
+    if (this.state !== 'locked') return;
 
     // Re-centre the grid about twice per second.
     if (frame.t - this.lastTrack > 0.5) {
@@ -242,6 +248,7 @@ export class Receiver {
     const patience = everGood ? Math.max(1.6, 5 * (lead?.Ts ?? 0.2)) : Math.max(1.2, 4.5 * Math.max(...this.demods.map((d) => d.Ts)));
     if (sinceGood > patience) {
       this.log(`lock dropped (no coherent pilots for ${sinceGood.toFixed(1)} s)`);
+      if (this.quad && !everGood) this.rejected.push({ quad: cloneQuad(this.quad), until: frame.t + 12 });
       this.unlock();
       this.cooldownUntil = frame.t + 0.2;
       return;
@@ -253,6 +260,7 @@ export class Receiver {
       const quiet = frame.t - Math.max(this.tLastPacket, this.tLockLast);
       if (quiet > Math.max(2.5, 7 * pktSec) && lead.stats.packetsBad >= 5) {
         this.log(`lock dropped (no valid packet for ${quiet.toFixed(1)} s)`);
+        if (this.quad && this.tFirstPacket === null) this.rejected.push({ quad: cloneQuad(this.quad), until: frame.t + 12 });
         this.unlock();
         this.cooldownUntil = frame.t + 0.2;
       }
@@ -299,7 +307,10 @@ export class Receiver {
     interface Hyp {
       grid: GridKey;
       plane: PlaneName;
+      carrier: number;
       metric: LockMetric;
+      /** Same sampler over more windows, used only for the pilot check. */
+      pilotMetric: LockMetric;
       quad: Quad;
       score: number;
     }
@@ -318,7 +329,9 @@ export class Receiver {
             const sampler = new GridSampler(grid.cols, grid.rows, sm.k, 0.6);
             const metric = new LockMetric(sampler, frames, plane, windows, sm.smooth);
             const res = refineQuad(metric, q0, grid.cols, grid.rows, true);
-            if (quadIsSane(res.quad, f0.w, f0.h)) hyps.push({ grid, plane, metric, quad: res.quad, score: res.score });
+            if (!quadIsSane(res.quad, f0.w, f0.h)) continue;
+            const pilotMetric = new LockMetric(sampler, frames, plane, makeLockWindows(frames, carrier, perWindow, 6), sm.smooth);
+            hyps.push({ grid, plane, carrier, metric, pilotMetric, quad: res.quad, score: res.score });
           }
         }
       }
@@ -349,15 +362,14 @@ export class Receiver {
       let pick: { quad: Quad; coh: number } | null = null;
       for (const s of shifts) {
         if (s.m < 0.4 * mMax) continue;
-        let coh = 0;
-        for (const ph of metric.phasors(s.quad)) coh = Math.max(coh, pilotCheck(layout, ph.zr, ph.zi).coherence);
+        const coh = pilotCheck(layout, h.pilotMetric.phasors(s.quad)).coherence;
         if (!pick || coh > pick.coh) pick = { quad: s.quad, coh };
       }
       if (!pick) continue;
       res = refineQuad(metric, pick.quad, grid.cols, grid.rows, false);
       if (!quadIsSane(res.quad, f0.w, f0.h)) continue;
-      let pilotCoh = 0;
-      for (const ph of metric.phasors(res.quad)) pilotCoh = Math.max(pilotCoh, pilotCheck(layout, ph.zr, ph.zi).coherence);
+      const pc = pilotCheck(layout, h.pilotMetric.phasors(res.quad));
+      const pilotCoh = pc.coherence;
       // Contrast against the same grid shifted by half a quadrant, where the
       // checker correlation of a true signal collapses.
       const off = metric.eval(shiftQuadInGrid(res.quad, grid.cols, grid.rows, 1, 1));
@@ -365,11 +377,20 @@ export class Receiver {
       // Rank by pilot coherence first: a wrong grid can collect energy, but it
       // cannot make the pilots agree.
       const rank = pilotCoh * Math.min(contrast, 3);
-      if (!best || rank > best.rank) best = { quad: res.quad, contrast, grid, plane: h.plane, pilotCoh, rank, kind: cand.kind };
+      if (!best || rank > best.rank) best = { quad: res.quad, contrast, grid, plane: h.plane, pilotCoh, rank, kind: cand.kind, carrier: h.carrier, pilots: pc };
     }
     // Noise alone gives a contrast of 1.0 within a few percent (hundreds of
     // cell-windows are averaged) and a pilot coherence near 1/sqrt(pilots).
-    if (!best || best.contrast < 1.5 || best.pilotCoh < 0.5) return null;
+    if (!best || best.contrast < 1.5 || best.pilotCoh < 0.6) return null;
+    // A place that already locked and then delivered nothing is not worth
+    // locking again straight away; it would only hide other proposals.
+    this.rejected = this.rejected.filter((r) => r.until > this.now);
+    const diag = Math.hypot(best.quad[2].x - best.quad[0].x, best.quad[2].y - best.quad[0].y);
+    for (const r of this.rejected) {
+      let worst = 0;
+      for (let i = 0; i < 4; i++) worst = Math.max(worst, Math.hypot(best.quad[i].x - r.quad[i].x, best.quad[i].y - r.quad[i].y));
+      if (worst < 0.08 * diag) return null;
+    }
     return best;
   }
 
@@ -411,6 +432,11 @@ export class Receiver {
     for (const p of this.presets) {
       if (p.cols !== best.grid.cols || p.rows !== best.grid.rows) continue;
       const d = new Demodulator(p, frames[0].t);
+      // The slopes measured at lock time hold for a preset whose carrier
+      // aliases with the same sign as the one the lock assumed (or with the
+      // opposite sign when the pilots only lined up conjugated).
+      const sign = (hz: number) => Math.sign(hz - Math.round(hz / this.fps) * this.fps);
+      if ((sign(p.carrierHz) === sign(best.carrier)) !== best.pilots.conj) d.setSlopePrior(best.pilots.su, best.pilots.sv);
       d.onPacket = (info) => this.onPacket(d, info);
       if (this.opt.onSymbol) d.onSymbol = (s) => this.opt.onSymbol!(p, s);
       this.demods.push(d);

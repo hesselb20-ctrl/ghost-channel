@@ -128,6 +128,9 @@ export interface PilotCheck {
   coherence: number;
   orient: number;
   conj: boolean;
+  /** Phase slopes of the best plane, cycles across the grid width and height. */
+  su: number;
+  sv: number;
 }
 
 /**
@@ -136,32 +139,108 @@ export interface PilotCheck {
  * their phase relations even in a window that straddles a symbol change (the
  * whole grid rotates together), so this works before symbol timing is known.
  * A grid that is one cell or half a cell off puts data under the pilot
- * positions and scores like noise, about 1/sqrt(pilots).
+ * positions and scores like noise.
+ *
+ * All windows must agree on one pair of slopes (only the offset may differ
+ * from window to window). That matters: a slope search over a dozen pilots in
+ * a single window can line up pure noise to a coherence of 0.7; requiring the
+ * same plane across several windows pulls the chance level down to about 0.3.
  */
-export function pilotCheck(layout: Layout, zr: Float64Array, zi: Float64Array): PilotCheck {
+export function pilotCheck(layout: Layout, windows: { zr: Float64Array; zi: Float64Array }[]): PilotCheck {
   const np = layout.pilotCells.length;
   const n = layout.nCells;
-  const pr = new Float64Array(np);
-  const pi = new Float64Array(np);
+  const W = windows.length;
+  const range = 0.06 * layout.preset.carrierHz;
+  const step = 0.1;
+  const steps = Math.round(range / step);
+  const count = 2 * steps + 1;
   const pu = new Float32Array(np);
   const pv = new Float32Array(np);
-  let best: PilotCheck = { coherence: 0, orient: 0, conj: false };
+  for (let k = 0; k < np; k++) {
+    const c = layout.pilotCells[k];
+    pu[k] = ((c % layout.cols) + 0.5) / layout.cols;
+    pv[k] = (Math.floor(c / layout.cols) + 0.5) / layout.rows;
+  }
+  // Phase tables: exp(-j*2*pi*s*u) for every slope candidate and pilot.
+  const cu = new Float64Array(count * np);
+  const su = new Float64Array(count * np);
+  const cv = new Float64Array(count * np);
+  const sv = new Float64Array(count * np);
+  for (let a = 0; a < count; a++) {
+    const s = (a - steps) * step;
+    for (let k = 0; k < np; k++) {
+      cu[a * np + k] = Math.cos(TWO_PI * s * pu[k]);
+      su[a * np + k] = Math.sin(TWO_PI * s * pu[k]);
+      cv[a * np + k] = Math.cos(TWO_PI * s * pv[k]);
+      sv[a * np + k] = Math.sin(TWO_PI * s * pv[k]);
+    }
+  }
+  let best: PilotCheck = { coherence: 0, orient: 0, conj: false, su: 0, sv: 0 };
+  const pr = new Float64Array(W * np);
+  const pi = new Float64Array(W * np);
+  const ar = new Float64Array(W * np);
+  const ai = new Float64Array(W * np);
   for (const conj of [false, true]) {
     for (const orient of [0, 2]) {
       let sumAbs = 0;
-      for (let k = 0; k < np; k++) {
-        const c = layout.pilotCells[k];
-        const src = orient === 2 ? n - 1 - c : c;
-        const [rr, ii] = derot(zr[src], conj ? -zi[src] : zi[src], layout.pilotQ[c]);
-        pr[k] = rr;
-        pi[k] = ii;
-        pu[k] = ((c % layout.cols) + 0.5) / layout.cols;
-        pv[k] = (Math.floor(c / layout.cols) + 0.5) / layout.rows;
-        sumAbs += Math.hypot(rr, ii);
+      for (let w = 0; w < W; w++) {
+        const { zr, zi } = windows[w];
+        // Clip each pilot's magnitude at twice the window median. Coherence is
+        // then a vote among pilots rather than a contest of amplitudes: two or
+        // three very strong cells (a lamp, a hard edge) can always be lined up
+        // by some plane, a dozen equal voices cannot.
+        const mags = new Float64Array(np);
+        for (let k = 0; k < np; k++) {
+          const c = layout.pilotCells[k];
+          const src = orient === 2 ? n - 1 - c : c;
+          mags[k] = Math.hypot(zr[src], zi[src]);
+        }
+        const cap = 2 * Float64Array.from(mags).sort()[np >> 1] + 1e-12;
+        for (let k = 0; k < np; k++) {
+          const c = layout.pilotCells[k];
+          const src = orient === 2 ? n - 1 - c : c;
+          const g = mags[k] > cap ? cap / mags[k] : 1;
+          const [rr, ii] = derot(zr[src] * g, (conj ? -zi[src] : zi[src]) * g, layout.pilotQ[c]);
+          pr[w * np + k] = rr;
+          pi[w * np + k] = ii;
+          sumAbs += Math.hypot(rr, ii);
+        }
       }
-      const pf = searchPlane(pr, pi, pu, pv, np, 0, 0, 0.06 * layout.preset.carrierHz, 0.1);
-      const coh = sumAbs > 0 ? pf.mag / sumAbs : 0;
-      if (coh > best.coherence) best = { coherence: coh, orient, conj };
+      if (sumAbs <= 0) continue;
+      for (let a = 0; a < count; a++) {
+        for (let w = 0; w < W; w++) {
+          for (let k = 0; k < np; k++) {
+            const c = cu[a * np + k];
+            const s = su[a * np + k];
+            const i = w * np + k;
+            ar[i] = pr[i] * c + pi[i] * s;
+            ai[i] = pi[i] * c - pr[i] * s;
+          }
+        }
+        for (let b = 0; b < count; b++) {
+          // The phase tilt comes from row timing (camera readout and display
+          // scan), so it runs along one grid axis: steep along the other only
+          // if the phone is turned a quarter. Skipping planes that are steep
+          // in both keeps the number of tries, and with it the chance level,
+          // down.
+          if (Math.abs(a - steps) > 2 && Math.abs(b - steps) > 2) continue;
+          let total = 0;
+          for (let w = 0; w < W; w++) {
+            let sr = 0;
+            let si = 0;
+            for (let k = 0; k < np; k++) {
+              const c = cv[b * np + k];
+              const s = sv[b * np + k];
+              const i = w * np + k;
+              sr += ar[i] * c + ai[i] * s;
+              si += ai[i] * c - ar[i] * s;
+            }
+            total += Math.hypot(sr, si);
+          }
+          const coh = total / sumAbs;
+          if (coh > best.coherence) best = { coherence: coh, orient, conj, su: (a - steps) * step, sv: (b - steps) * step };
+        }
+      }
     }
   }
   return best;
@@ -201,6 +280,11 @@ export class Demodulator {
   cellConf: Float32Array;
   lastGoodSymbolTime = -Infinity;
   stats: DemodStats = { symbols: 0, weakSymbols: 0, packetsOk: 0, packetsBad: 0, rawBits: 0, rawBitErrors: 0 };
+
+  /** Phase-plane slopes measured when the grid was locked; narrows the per-symbol search. */
+  setSlopePrior(su: number, sv: number): void {
+    this.slope = { su, sv, n: 3 };
+  }
 
   onPacket: (info: PacketInfo) => void = () => {};
   onSymbol: ((s: SymbolDebug) => void) | null = null;
@@ -468,10 +552,18 @@ export class Demodulator {
         const pu = new Float32Array(np);
         const pv = new Float32Array(np);
         let sumAbs = 0;
+        const mags = new Float64Array(np);
         for (let k = 0; k < np; k++) {
           const c = layout.pilotCells[k];
+          mags[k] = Math.hypot(zr[c], zi[c]);
+        }
+        // Magnitudes clipped at twice the median, as in pilotCheck().
+        const cap = 2 * Float64Array.from(mags).sort()[np >> 1] + 1e-12;
+        for (let k = 0; k < np; k++) {
+          const c = layout.pilotCells[k];
+          const g = mags[k] > cap ? cap / mags[k] : 1;
           // Remove the known pilot quadrant: multiply by exp(-j*q*pi/2).
-          const [rr, ii] = derot(zr[c], zi[c], layout.pilotQ[c]);
+          const [rr, ii] = derot(zr[c] * g, zi[c] * g, layout.pilotQ[c]);
           pr[k] = rr;
           pi[k] = ii;
           pu[k] = this.cu[c];
@@ -550,7 +642,7 @@ export class Demodulator {
       this.cellConf[best.orient === 2 ? nCells - 1 - c : c] = conf;
     }
 
-    const good = best.coh > 0.55;
+    const good = best.coh > 0.6;
     if (!good) this.stats.weakSymbols++;
     else this.lastGoodSymbolTime = start + this.Ts / 2;
 
@@ -655,6 +747,8 @@ export class Demodulator {
     }
     const bits = syms.length * layout.dataCells.length * this.preset.bitsPerCell;
     this.stats.packetsOk++;
+    // A packet that passes its CRC is the strongest sign that the lock is good.
+    this.lastGoodSymbolTime = Math.max(this.lastGoodSymbolTime, time);
     this.stats.rawBits += bits;
     this.stats.rawBitErrors += errs;
     // A verified packet settles plane and orientation for good.

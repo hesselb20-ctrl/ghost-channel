@@ -1,0 +1,125 @@
+.ab-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1500px;
+  margin: 0 auto;
+  align-items: start;
+}
+.ab-stage-wrap {
+  position: sticky;
+  top: 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.ab-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.ab-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.ab-cover {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #6e6e73;
+  color: #fff;
+  text-align: center;
+  padding: 24px;
+}
+.ab-cover[hidden] {
+  display: none;
+}
+.ab-cover-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 46ch;
+}
+.ab-cover h2 {
+  font-size: 28px;
+}
+.ab-cover .big {
+  font: 600 64px/1 var(--font);
+  letter-spacing: -0.02em;
+}
+.ab-label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font: 600 12px/1 var(--font);
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+}
+.ab-label[hidden] {
+  display: none;
+}
+.ab-answer {
+  padding: 4px;
+  font-weight: 600;
+}
+.ab-answer[hidden] {
+  display: none;
+}
+kbd {
+  font: 500 11px var(--mono);
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--line);
+  color: var(--text-2);
+}
+.ab-table-wrap {
+  overflow-x: auto;
+}
+.ab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.ab-table[hidden] {
+  display: none;
+}
+.ab-table th {
+  text-align: right;
+  font-weight: 500;
+  color: var(--text-2);
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--line);
+}
+.ab-table td {
+  text-align: right;
+  padding: 6px 4px;
+  font-family: var(--mono);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.ab-table th:first-child,
+.ab-table td:first-child {
+  text-align: left;
+}
+@media (max-width: 900px) {
+  .ab-layout {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 12px;
+    gap: 12px;
+  }
+  .ab-stage-wrap {
+    position: static;
+  }
+}

@@ -15,7 +15,10 @@
     "sim:model": "node src/sim/run-model.ts",
     "sim:sweep": "node src/sim/run-sweep.ts",
     "sim:join": "node src/sim/run-join.ts",
-    "sim:codec": "node src/sim/run-codec.ts"
+    "sim:codec": "node src/sim/run-codec.ts",
+    "sim:micro": "node src/sim/run-micro.ts",
+    "sim:presets": "node src/sim/print-presets.ts",
+    "sim:one": "node src/sim/run-one.ts"
   },
   "devDependencies": {
     "typescript": "^5.6.0",
@@ -24,5 +27,8 @@
   },
   "dependencies": {
     "@types/node": "^26.6.6"
+  },
+  "engines": {
+    "node": ">=22.18"
   }
 }

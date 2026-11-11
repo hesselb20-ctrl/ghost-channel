@@ -11,7 +11,8 @@ import { PRESETS, presetByKey, type Preset } from '../core/presets.ts';
 import { mulberry32 } from '../core/prng.ts';
 import { rgbaToFrame } from '../core/rx/frame.ts';
 import { Receiver } from '../core/rx/receiver.ts';
-import { CameraSim, DEFAULT_CAMERA, DEFAULT_DISPLAY, DisplaySim, type CameraParams, type DisplayParams } from './camera.ts';
+import { CameraSim, DEFAULT_CAMERA, DEFAULT_DISPLAY, DisplaySim, projectScreen, type CameraParams, type DisplayParams } from './camera.ts';
+import type { Quad } from '../core/homography.ts';
 import type { ContentKind } from './content.ts';
 
 export interface TrialConfig {
@@ -34,6 +35,11 @@ export interface TrialConfig {
   /** Detector decimation; raise it with the camera resolution. */
   mapStep?: number;
   verbose?: boolean;
+  /**
+   * Simulates the user dragging the four corner handles onto the screen, with
+   * this many pixels of error per corner (the receiver's manual-assist path).
+   */
+  manualCornersPx?: number;
 }
 
 export interface TrialResult {
@@ -115,6 +121,12 @@ export function runTrial(cfg: TrialConfig): TrialResult {
     },
   });
 
+  if (cfg.manualCornersPx !== undefined) {
+    const rng = mulberry32(seed * 31 + 7);
+    const e = cfg.manualCornersPx;
+    const q = projectScreen(cparams, dparams.w / dparams.h).map((p) => ({ x: p.x + ((rng() % 2001) / 1000 - 1) * e, y: p.y + ((rng() % 2001) / 1000 - 1) * e }));
+    rx.setManualQuad(q as Quad);
+  }
   const maxSeconds = cfg.maxSeconds ?? 12;
   const nFrames = Math.ceil(maxSeconds * cparams.fps);
   let tFirst: number | null = null;

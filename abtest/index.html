@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Blind test · Ghost Channel</title>
+    <meta name="description" content="Can you see the hidden data? A two-interval blind test that finds the amplitude at which detection falls to chance." />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../src/ui/base.css" />
+    <link rel="stylesheet" href="../src/abtest/abtest.css" />
+  </head>
+  <body>
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="../">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V10a7 7 0 0 1 14 0v11l-2.3-2-2.4 2-2.3-2-2.3 2-2.4-2z" /><circle cx="9.5" cy="10.5" r="1" fill="currentColor" /><circle cx="14.5" cy="10.5" r="1" fill="currentColor" /></svg>
+        Ghost Channel
+      </a>
+      <a class="tab" href="../send/">Send</a>
+      <a class="tab" href="../receive/">Receive</a>
+      <a class="tab" href="./" aria-current="page">Blind test</a>
+    </nav>
+
+    <main class="ab-layout">
+      <section class="ab-stage-wrap">
+        <div class="ab-stage" id="stage">
+          <canvas id="canvas" aria-label="Test clip"></canvas>
+          <div class="ab-cover" id="cover">
+            <div class="ab-cover-inner" id="coverInner">
+              <h2>Can you see it?</h2>
+              <p>Each trial plays the same clip twice. One of the two carries hidden data. You say which. If you are guessing, you will be right about half the time, and that is the point where the data is invisible to you.</p>
+              <button class="primary" id="beginBtn">Begin</button>
+            </div>
+          </div>
+          <div class="ab-label" id="label" hidden></div>
+        </div>
+        <div class="row ab-answer" id="answerRow" hidden>
+          <span class="grow">Which one carried hidden data?</span>
+          <button id="ans1">First <kbd>1</kbd></button>
+          <button id="ans2">Second <kbd>2</kbd></button>
+        </div>
+        <p class="small muted" id="progress"></p>
+      </section>
+
+      <aside class="stack">
+        <section class="card stack" id="setup">
+          <h2>Setup</h2>
+          <label class="field">Clip
+            <select id="contentSel">
+              <option value="demo:slide">White slide</option>
+              <option value="demo:portrait" selected>Talking head (stand-in)</option>
+              <option value="demo:dark">Dark cinematic</option>
+              <option value="demo:aurora">Colour field</option>
+              <option value="webcam">My webcam (a real talking head)</option>
+              <option value="file">My own video or image…</option>
+            </select>
+          </label>
+          <input type="file" id="mediaInput" accept="image/*,video/*" class="sr-only" tabindex="-1" />
+          <label class="field">Preset
+            <select id="presetSel"></select>
+          </label>
+          <div class="row">
+            <span class="small muted grow">Modulate along</span>
+            <div class="seg" role="group" aria-label="Modulation axis" id="axisSeg">
+              <button data-axis="chroma" aria-pressed="true">Colour</button>
+              <button data-axis="luma" aria-pressed="false">Brightness</button>
+            </div>
+          </div>
+          <label class="field">Amplitudes to test, in percent
+            <input type="text" id="levels" value="0.5, 1, 2, 3, 4, 6, 8" inputmode="decimal" />
+          </label>
+          <label class="field">Trials per amplitude
+            <select id="trialsSel">
+              <option value="6">6 (quick look, about 4 minutes)</option>
+              <option value="10" selected>10</option>
+              <option value="20">20 (tight error bars)</option>
+            </select>
+          </label>
+          <label class="field">Clip length
+            <select id="secsSel">
+              <option value="2">2 seconds</option>
+              <option value="3" selected>3 seconds</option>
+              <option value="5">5 seconds</option>
+            </select>
+          </label>
+          <p class="note warn">Photosensitivity: the highest amplitudes can produce faint visible flicker at 20 Hz. Do not take this test if flicker could affect you. Amplitudes above 9 % are refused.</p>
+          <p class="note bad" id="setupError" hidden></p>
+        </section>
+
+        <section class="card stack">
+          <h2>Results</h2>
+          <p class="small muted" id="verdict">No results yet. Sit at your normal viewing distance, keep the room as it usually is, and do not lean in.</p>
+          <div class="ab-table-wrap">
+            <table class="ab-table" id="table" hidden>
+              <thead><tr><th>Amplitude</th><th>Correct</th><th>Rate</th><th>95 % interval</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="row">
+            <button id="exportBtn" disabled>Download results (JSON)</button>
+            <button id="clearBtn" class="quiet">Clear</button>
+          </div>
+        </section>
+      </aside>
+    </main>
+    <script type="module" src="../src/abtest/main.ts"></script>
+  </body>
+</html>

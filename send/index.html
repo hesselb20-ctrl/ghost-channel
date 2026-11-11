@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Send · Ghost Channel</title>
+    <meta name="description" content="Hide a link, a message or a small file inside whatever this screen is showing." />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../src/ui/base.css" />
+    <link rel="stylesheet" href="../src/send/send.css" />
+  </head>
+  <body>
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="../">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V10a7 7 0 0 1 14 0v11l-2.3-2-2.4 2-2.3-2-2.3 2-2.4-2z" /><circle cx="9.5" cy="10.5" r="1" fill="currentColor" /><circle cx="14.5" cy="10.5" r="1" fill="currentColor" /></svg>
+        Ghost Channel
+      </a>
+      <a class="tab" href="./" aria-current="page">Send</a>
+      <a class="tab" href="../receive/">Receive</a>
+      <a class="tab" href="../abtest/">Blind test</a>
+    </nav>
+
+    <main class="send-layout">
+      <section class="stage-wrap" aria-label="Broadcast picture">
+        <div class="stage" id="stage">
+          <canvas id="canvas" aria-label="Picture carrying the hidden data"></canvas>
+          <div class="badge" id="badge" title="This screen is carrying hidden data">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V10a7 7 0 0 1 14 0v11l-2.3-2-2.4 2-2.3-2-2.3 2-2.4-2z" /></svg>
+            <span>ghost</span>
+          </div>
+          <div class="stage-msg" id="stageMsg" hidden></div>
+          <button class="exit-fs" id="exitFs" hidden>Exit full screen</button>
+        </div>
+        <div class="row stage-actions">
+          <button class="primary" id="toggle">Start broadcast</button>
+          <button id="fullscreen">Full screen</button>
+          <span class="pill" id="statePill">Idle</span>
+          <span class="grow"></span>
+          <span class="small muted" id="summary"></span>
+        </div>
+      </section>
+
+      <aside class="controls stack" aria-label="Settings">
+        <section class="card stack">
+          <h2>Message</h2>
+          <div class="seg" role="group" aria-label="Message type" id="typeSeg">
+            <button data-type="url" aria-pressed="true">Link</button>
+            <button data-type="text" aria-pressed="false">Text</button>
+            <button data-type="file" aria-pressed="false">File</button>
+          </div>
+          <label class="field" id="urlField">Link
+            <input type="url" id="urlInput" value="https://example.org/ghost-channel" autocomplete="off" spellcheck="false" />
+          </label>
+          <label class="field" id="textField" hidden>Text
+            <textarea id="textInput" maxlength="60000">Hello from the screen.</textarea>
+          </label>
+          <div id="fileField" hidden class="stack">
+            <button id="fileBtn">Choose a file (up to 64 KB)</button>
+            <input type="file" id="fileInput" class="sr-only" tabindex="-1" />
+            <p class="small muted" id="fileInfo">No file chosen.</p>
+          </div>
+          <p class="note bad" id="payloadError" hidden></p>
+        </section>
+
+        <section class="card stack">
+          <h2>Picture</h2>
+          <label class="field">What the audience sees
+            <select id="sourceSel">
+              <option value="demo:slide">Demo: white slide</option>
+              <option value="demo:aurora" selected>Demo: colour field</option>
+              <option value="demo:portrait">Demo: talking head (stand-in)</option>
+              <option value="demo:dark">Demo: dark cinematic</option>
+              <option value="file">Image or video file…</option>
+              <option value="screen">Share a screen, window or tab…</option>
+              <option value="webcam">Webcam</option>
+            </select>
+          </label>
+          <input type="file" id="mediaInput" accept="image/*,video/*" class="sr-only" tabindex="-1" />
+          <p class="note bad" id="sourceError" hidden></p>
+        </section>
+
+        <section class="card stack">
+          <h2>Channel</h2>
+          <label class="field">Preset
+            <select id="presetSel"></select>
+          </label>
+          <p class="small muted" id="presetNote"></p>
+          <div class="slider-row">
+            <span>Amplitude</span><output id="ampOut"></output>
+            <input type="range" id="amp" min="0.25" max="10" step="0.25" value="3" aria-label="Modulation amplitude in percent" />
+          </div>
+          <div class="row">
+            <span class="small muted grow">Modulate along</span>
+            <div class="seg" role="group" aria-label="Modulation axis" id="axisSeg">
+              <button data-axis="chroma" aria-pressed="true">Colour</button>
+              <button data-axis="luma" aria-pressed="false">Brightness</button>
+            </div>
+          </div>
+          <details>
+            <summary>Fine tuning</summary>
+            <div class="stack">
+              <div class="slider-row">
+                <span>Shadow boost</span><output id="floorOut"></output>
+                <input type="range" id="floor" min="0" max="3" step="0.1" value="0.4" aria-label="Shadow boost" />
+              </div>
+              <div class="slider-row">
+                <span>Headroom at black and white</span><output id="rangeOut"></output>
+                <input type="range" id="range" min="0" max="5" step="0.5" value="1.5" aria-label="Headroom" />
+              </div>
+              <div class="slider-row">
+                <span>Checker edge softness</span><output id="softOut"></output>
+                <input type="range" id="soft" min="0.05" max="1" step="0.05" value="0.5" aria-label="Edge softness" />
+              </div>
+              <label class="field">Display transfer curve
+                <select id="gammaSel">
+                  <option value="0" selected>sRGB (most screens)</option>
+                  <option value="2.2">Gamma 2.2</option>
+                  <option value="2.4">Gamma 2.4</option>
+                </select>
+              </label>
+              <label class="switch">Show grid lines (debug)<input type="checkbox" id="gridSwitch" /></label>
+            </div>
+          </details>
+          <label class="switch">Make modulation visible (debug)<input type="checkbox" id="debugSwitch" /></label>
+          <p class="note warn" id="debugNote" hidden>
+            Photosensitivity warning: debug mode makes the picture flicker on purpose at the carrier frequency (20 Hz on a 60 Hz screen). That is inside the 3–30 Hz range that can trigger seizures in people with photosensitive epilepsy. Amplitude stays capped at 9 % so no flash reaches the 10 % relative-luminance threshold in WCAG 2.3.1, and neighbouring quadrants flicker in opposite directions. Still: do not use it in front of an audience.
+          </p>
+          <label class="switch">Show the “ghost” badge<input type="checkbox" id="badgeSwitch" checked /></label>
+        </section>
+
+        <section class="card stack">
+          <h2>Status</h2>
+          <dl class="kv">
+            <dt>Display refresh</dt><dd id="sRefresh">–</dd>
+            <dt>Carrier</dt><dd id="sCarrier">–</dd>
+            <dt>Dropped frames</dt><dd id="sDropped">–</dd>
+            <dt>Throughput (no loss)</dt><dd id="sBps">–</dd>
+            <dt>Message size on air</dt><dd id="sSize">–</dd>
+            <dt>One full pass</dt><dd id="sPass">–</dd>
+          </dl>
+          <p class="note warn" id="dropWarn" hidden></p>
+        </section>
+
+        <section class="card stack">
+          <h2>Export as video</h2>
+          <p class="small muted">Records the canvas with MediaRecorder. Video compression removes most of a faint, fast signal: use the Export-safe preset, the Brightness axis and a visible amplitude, and expect a low data rate. See the README for measured numbers.</p>
+          <div class="row">
+            <select id="exportSecs" aria-label="Recording length" style="width:auto">
+              <option value="10">10 seconds</option>
+              <option value="20" selected>20 seconds</option>
+              <option value="40">40 seconds</option>
+            </select>
+            <button id="exportBtn">Record and download</button>
+          </div>
+          <p class="small muted" id="exportInfo"></p>
+        </section>
+      </aside>
+    </main>
+    <script type="module" src="../src/send/main.ts"></script>
+  </body>
+</html>

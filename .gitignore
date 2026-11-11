@@ -3,5 +3,6 @@ dist
 *.local
 .vite
 sim-out
+.cert
 *.pem
 .claude

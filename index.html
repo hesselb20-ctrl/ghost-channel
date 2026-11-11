@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Ghost Channel</title>
+    <meta name="description" content="An invisible QR code: data hidden in the picture on a screen, read by a phone camera, with both ends running as web pages." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./src/ui/base.css" />
+    <link rel="stylesheet" href="./src/landing/landing.css" />
+  </head>
+  <body>
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="./" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V10a7 7 0 0 1 14 0v11l-2.3-2-2.4 2-2.3-2-2.3 2-2.4-2z" /><circle cx="9.5" cy="10.5" r="1" fill="currentColor" /><circle cx="14.5" cy="10.5" r="1" fill="currentColor" /></svg>
+        Ghost Channel
+      </a>
+      <a class="tab" href="./send/">Send</a>
+      <a class="tab" href="./receive/">Receive</a>
+      <a class="tab" href="./abtest/">Blind test</a>
+    </nav>
+
+    <main>
+      <header class="hero">
+        <p class="eyebrow">Screen-to-camera data, in the browser</p>
+        <h1>Data hidden in plain sight.</h1>
+        <p class="lede">Ghost Channel hides a link, a message or a small file inside whatever a screen is showing. People see a normal picture. A phone camera sees the data. Both ends are ordinary web pages.</p>
+        <div class="row cta">
+          <a class="btn primary" href="./receive/">Open the receiver</a>
+          <a class="btn" href="./send/">Send something</a>
+        </div>
+      </header>
+
+      <section class="demo" aria-label="Live demo">
+        <div class="demo-stage" id="demoStage">
+          <canvas id="demoCanvas" aria-label="A slowly moving colour field that is carrying a hidden message"></canvas>
+          <div class="demo-badge" id="demoBadge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V10a7 7 0 0 1 14 0v11l-2.3-2-2.4 2-2.3-2-2.3 2-2.4-2z" /></svg>
+            <span>ghost</span>
+          </div>
+          <p class="demo-fallback" id="demoFallback" hidden></p>
+        </div>
+        <div class="demo-caption">
+          <div class="grow">
+            <strong>This picture is broadcasting right now.</strong>
+            <p class="muted small">Open the receiver on a phone and point it here to read the message it carries. <span id="demoStats"></span></p>
+          </div>
+          <label class="switch small">Show the grid<input type="checkbox" id="demoGrid" /></label>
+        </div>
+      </section>
+
+      <section class="how">
+        <h2>How it works</h2>
+        <div class="cards">
+          <article class="card">
+            <span class="step">1</span>
+            <h3>Each cell flickers, faintly and fast</h3>
+            <p>The picture is divided into a grid. Every cell shifts slightly along the blue–yellow axis at 20 Hz, where eyes are least sensitive to change. Neighbouring quadrants move in opposite directions, so nothing pulses.</p>
+          </article>
+          <article class="card">
+            <span class="step">2</span>
+            <h3>The frames add up to the original</h3>
+            <p>On a 60 Hz screen the carrier is three frames long and those three shifts sum to zero in linear light. Averaged over time, which is what vision does at this speed, the picture is unchanged.</p>
+          </article>
+          <article class="card">
+            <span class="step">3</span>
+            <h3>The camera turns it into a slow beat</h3>
+            <p>A 30 fps camera cannot follow 20 Hz. It sees a 10 Hz beat instead, and the phase of that beat in each cell carries two bits. Reed–Solomon and a fountain code turn noisy cells into an exact file.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="facts">
+        <h2>What it does, and how sure we are</h2>
+        <div class="fact-grid">
+          <div class="card fact"><strong id="fStandard">620 bps</strong><span>Standard preset, 16×9 grid, with no packet loss</span></div>
+          <div class="card fact"><strong id="fDense">1.7 kbps</strong><span>Dense preset, 24×14 grid, close range</span></div>
+          <div class="card fact"><strong>Join any time</strong><span>Every packet stands alone; a receiver needs enough of them, not specific ones</span></div>
+          <div class="card fact"><strong>No install</strong><span>WebGL2 sender, camera and worker receiver, static files only</span></div>
+        </div>
+        <p class="muted small provenance">These rates come from the protocol itself. Decoding has been verified against a simulated rolling-shutter camera and in a browser loop-back, not yet on a physical phone and screen. The README lists every number with where it came from, and what still has to be measured by hand.</p>
+      </section>
+
+      <section class="safety">
+        <h2>Built to be used in front of people</h2>
+        <ul class="plain">
+          <li><strong>A visible mark by default.</strong> The sender shows a small “ghost” badge so an audience can know a screen is carrying data. A presenter can turn it off.</li>
+          <li><strong>Nothing opens by itself.</strong> The receiver shows the full address of a link and waits for a tap. Text is shown as text. Files are only offered as downloads.</li>
+          <li><strong>Flicker stays below what you can see.</strong> The debug mode that makes it visible carries a photosensitivity warning and an amplitude cap.</li>
+        </ul>
+      </section>
+
+      <section class="prior">
+        <h2>Standing on earlier work</h2>
+        <p class="muted">Research groups showed that screens can carry hidden data, using native prototypes. Ghost Channel borrows their ideas and rebuilds them for what browsers can do.</p>
+        <ul class="plain refs">
+          <li><strong>HiLight</strong> (Dartmouth, MobiSys 2015): data in pixel translucency changes, on any content.</li>
+          <li><strong>InFrame and InFrame++</strong> (MobiSys 2015): complementary frame pairs inside full-frame video.</li>
+          <li><strong>Uber-in-Light</strong> (Rutgers): modulation along a complementary colour axis.</li>
+          <li><strong>Revelio</strong> (arXiv 2501.02349): shapes of pixel regions that survive rolling shutter and timing mismatch.</li>
+        </ul>
+      </section>
+    </main>
+    <footer class="foot muted small">
+      <span>Ghost Channel · MIT licence · no accounts, no analytics, no server</span>
+    </footer>
+    <script type="module" src="./src/landing/main.ts"></script>
+  </body>
+</html>

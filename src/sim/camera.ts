@@ -266,17 +266,26 @@ export class CameraSim {
     this.lin = new Float32Array(p.w * p.h * 3);
     this.tmp = new Float32Array(p.w * p.h * 3);
     this.bg = new Float32Array(p.w * p.h);
-    // Static, mildly structured room behind the screen.
+    // Static room behind the screen: soft lighting gradient, a few hard-edged
+    // objects of random size and brightness, fine surface texture.
     const brng = mulberry32(seed ^ 0x77aa);
-    let v = 0.5;
+    const s = p.w / 640;
     for (let y = 0; y < p.h; y++) {
       for (let x = 0; x < p.w; x++) {
-        v += (toUnit(brng()) - 0.5) * 0.08;
-        v = Math.min(1, Math.max(0, v));
-        const band = ((x >> 5) + (y >> 5)) & 1 ? 1.25 : 0.8;
-        this.bg[y * p.w + x] = p.background * band * (0.6 + 0.8 * v);
+        this.bg[y * p.w + x] = 0.75 + 0.35 * Math.sin(x / (170 * s) + 1.3) * Math.cos(y / (120 * s));
       }
     }
+    for (let i = 0; i < 14; i++) {
+      const x0 = Math.floor(toUnit(brng()) * p.w);
+      const y0 = Math.floor(toUnit(brng()) * p.h);
+      const bw = Math.floor((20 + toUnit(brng()) * 150) * s);
+      const bh = Math.floor((15 + toUnit(brng()) * 110) * s);
+      const lvl = 0.45 + toUnit(brng()) * 1.1;
+      for (let y = y0; y < Math.min(p.h, y0 + bh); y++) {
+        for (let x = x0; x < Math.min(p.w, x0 + bw); x++) this.bg[y * p.w + x] = lvl;
+      }
+    }
+    for (let i = 0; i < this.bg.length; i++) this.bg[i] = p.background * this.bg[i] * (0.94 + 0.12 * toUnit(brng()));
   }
 
   private shake(t: number): { dx: number; dy: number; roll: number } {

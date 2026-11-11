@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Receive · Ghost Channel</title>
+    <meta name="description" content="Point the camera at a screen and read the data hidden in it." />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../src/ui/base.css" />
+    <link rel="stylesheet" href="../src/receive/receive.css" />
+  </head>
+  <body>
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="../">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V10a7 7 0 0 1 14 0v11l-2.3-2-2.4 2-2.3-2-2.3 2-2.4-2z" /><circle cx="9.5" cy="10.5" r="1" fill="currentColor" /><circle cx="14.5" cy="10.5" r="1" fill="currentColor" /></svg>
+        Ghost Channel
+      </a>
+      <a class="tab" href="../send/">Send</a>
+      <a class="tab" href="./" aria-current="page">Receive</a>
+      <a class="tab" href="../abtest/">Blind test</a>
+    </nav>
+
+    <main class="rx-layout">
+      <section class="finder-wrap">
+        <div class="finder is-empty" id="finder">
+          <video id="video" playsinline muted></video>
+          <canvas id="overlay" aria-hidden="true"></canvas>
+          <div class="finder-empty" id="empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><circle cx="12" cy="12.5" r="3.5" /></svg>
+            <p>Point the rear camera at a screen that is broadcasting.</p>
+            <div class="row" style="justify-content:center">
+              <button class="primary" id="startBtn">Start camera</button>
+              <button id="selfTestBtn">Self-test without a camera</button>
+            </div>
+            <p class="small" id="startError" hidden></p>
+          </div>
+          <div class="hud" id="hud" hidden>
+            <div class="ring" id="ring" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Download progress">
+              <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19" class="track" /><circle cx="22" cy="22" r="19" class="fill" id="ringFill" /></svg>
+              <span id="ringText">0%</span>
+            </div>
+            <div class="hud-text">
+              <strong id="hudTitle">Looking for a screen…</strong>
+              <span id="hudSub">Hold steady, fill most of the view with the screen.</span>
+            </div>
+          </div>
+        </div>
+        <div class="row finder-actions" id="actions" hidden>
+          <button id="stopBtn">Stop</button>
+          <button id="restartBtn">Start over</button>
+          <button id="manualBtn" aria-pressed="false">Place corners by hand</button>
+          <span class="grow"></span>
+          <span class="pill" id="statePill">Idle</span>
+        </div>
+      </section>
+
+      <aside class="stack rx-side">
+        <section class="card stack">
+          <h2>Camera</h2>
+          <label class="field">Processing size
+            <select id="procSel">
+              <option value="640" selected>640 px wide (fast, up to about 0.6 m)</option>
+              <option value="960">960 px wide</option>
+              <option value="1280">1280 px wide (for 1 m and beyond)</option>
+            </select>
+          </label>
+          <label class="field">Preset
+            <select id="presetSel"><option value="">Detect automatically</option></select>
+          </label>
+          <label class="switch">Ask for 60 fps<input type="checkbox" id="fps60" /></label>
+          <label class="switch">Lock exposure and white balance<input type="checkbox" id="lockAe" /></label>
+          <div class="slider-row" id="zoomRow" hidden>
+            <span>Zoom</span><output id="zoomOut">1.0×</output>
+            <input type="range" id="zoom" min="1" max="4" step="0.1" value="1" aria-label="Camera zoom" />
+          </div>
+          <p class="small muted" id="capInfo">Camera capabilities appear here once it is running.</p>
+        </section>
+
+        <section class="card stack">
+          <details open>
+            <summary>Diagnostics</summary>
+            <div class="stack">
+              <dl class="kv">
+                <dt>State</dt><dd id="dState">–</dd>
+                <dt>Camera frame rate</dt><dd id="dFps">–</dd>
+                <dt>Frames skipped (worker busy)</dt><dd id="dSkip">–</dd>
+                <dt>Processing per frame</dt><dd id="dProc">–</dd>
+                <dt>Timestamps</dt><dd id="dTs">–</dd>
+                <dt>Preset · axis</dt><dd id="dPreset">–</dd>
+                <dt>Pilot coherence</dt><dd id="dCoh">–</dd>
+                <dt>Pilot SNR</dt><dd id="dSnr">–</dd>
+                <dt>Bit error rate before FEC</dt><dd id="dBer">–</dd>
+                <dt>Bit error rate after FEC</dt><dd id="dBerPost">–</dd>
+                <dt>Packets ok / failed</dt><dd id="dPkts">–</dd>
+                <dt>Packets per second</dt><dd id="dPps">–</dd>
+                <dt>Throughput</dt><dd id="dBps">–</dd>
+                <dt>Time to lock</dt><dd id="dLock">–</dd>
+                <dt>Time to first packet</dt><dd id="dFirst">–</dd>
+                <dt>Time to full decode</dt><dd id="dDone">–</dd>
+                <dt>Exposure</dt><dd id="dExp">–</dd>
+                <dt>Backend</dt><dd id="dBackend">–</dd>
+              </dl>
+              <div class="row">
+                <button id="copyDiag">Copy as text</button>
+              </div>
+              <pre class="log" id="log" aria-label="Receiver log"></pre>
+            </div>
+          </details>
+        </section>
+      </aside>
+    </main>
+
+    <dialog id="resultDlg" aria-labelledby="resTitle">
+      <div class="stack">
+        <span class="eyebrow" id="resKind">Received</span>
+        <h2 id="resTitle">Message</h2>
+        <div class="res-body" id="resBody"></div>
+        <p class="small muted" id="resMeta"></p>
+        <div class="row" id="resActions"></div>
+      </div>
+    </dialog>
+
+    <canvas id="selfCanvas" width="1280" height="720" hidden></canvas>
+    <script type="module" src="../src/receive/main.ts"></script>
+  </body>
+</html>
