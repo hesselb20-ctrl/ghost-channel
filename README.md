@@ -15,7 +15,8 @@ An invisible QR code. Ghost Channel hides a link, a message or a small file insi
 |---|---|
 | Codecs: CRC-32, Reed–Solomon with erasures, fountain code, framing | 21 unit tests on a perfect channel (25 tests in all, with the channel tests) |
 | Modulation and the full receiver | A simulated rolling-shutter camera (`src/sim`), running the real transmitter and the real decoder |
-| Browser build: WebGL2 sender, camera pipeline, worker, decoder | Loop-back in desktop Chromium: the sender's canvas is captured as a video stream and fed to the receiver |
+| Browser build: WebGL2 sender, camera pipeline, worker, decoder | Loop-back in two desktop browsers (an embedded Chromium pane and Chrome), on the dev server and on the deployed site: the sender's canvas is captured as a video stream and fed to the receiver |
+| Deployment | Live on GitHub Pages, built and published by the workflow in this repository |
 | WebGL shader equals the simulator's renderer | Compared in the browser: every pixel within one code value (the dither) |
 | Survival of video compression | Real H.264 and VP9 via ffmpeg, decoder fed the decoded frames |
 | **A phone pointed at a screen** | **Not done.** No phone was available to the build. Milestones 2–5 of the brief are verified in the simulator only |
@@ -121,7 +122,7 @@ Full tables with bit error rates and packet counts: [RESULTS.md](RESULTS.md). Ev
 
 | Metric | Minimum | Stretch | Simulator | Real device |
 |---|---|---|---|---|
-| Throughput when invisible | 100 bps | 1 kbps+ | The amplitude at which it becomes invisible is unknown (needs the blind test). At 2 % colour, 0.4 m: `standard` 620 bps on the slide, about 500 bps on the talking head (4 of 5 packets); `far` 340 bps on both. At 1 % only bright content still decodes (`standard` and `far` on the white slide) | not measured |
+| Throughput when invisible | 100 bps | 1 kbps+ | The amplitude at which it becomes invisible is unknown (needs the blind test). At 2 % colour, 0.4 m: `standard` 620 bps on the slide, about 440 bps on the talking head (5 of 7 packets); `far` 340 bps on both. At 1 % only bright content still decodes (`standard` and `far` on the white slide) | not measured |
 | Time to decode a 60-byte link | ≤ 5 s | ≤ 2 s | 61-byte link at 0.4 m, colour 2 % and 4 %: `standard` 1.7 s, `dense` 0.5 s, `far` 3.3 s, from the first camera frame | not measured |
 | Bit error rate after error correction | 0 on complete payloads | – | 181 of 181 completed payloads in the sweep and all three 32 KB files were byte-exact; 0 wrong payloads in 336 trials, including the ones that failed | not measured |
 | Blind A/B detection | ≤ 60 % | ≈ 50 % | cannot be simulated | not measured: nobody has taken the test |
@@ -136,48 +137,52 @@ Seconds to recover a 60-byte file payload (as a file it is a 106-byte object, 3�
 
 Talking-head stand-in:
 
+<!-- MATRIX:talking:START -->
 | preset, axis, amplitude | A | B | C | D | E | F | G | H | I | J | K | L | M | N |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| far, brightness 8 % | 2.7 | 2.7 | 2.7 | 2.7 | x | 2.7 | 2.7 | 2.7 | 2.7 | 2.7 | 2.7 | 2.7 | 3.5 | x |
-| far, colour 4 % | 2.7 | 2.7 | 2.7 | 2.7 | x | 2.7 | x | 2.7 | 2.7 | 2.7 | 2.7 | x | 4.3 | x |
+| far, brightness 8 % | 2.7 | 2.7 | 2.7 | 2.7 | x | 2.7 | 2.7 | 2.7 | 2.7 | 2.7 | 2.7 | 2.7 | 4.3 | x |
+| far, colour 4 % | 2.7 | 2.7 | 2.7 | 2.7 | x | 2.7 | 8.3 | 2.7 | 2.7 | 2.7 | 2.7 | x | 4.3 | x |
 | far, colour 2 % | 2.7 | 2.7 | x | x | x | 8.3 | x | 2.7 | 2.7 | x | x | x | 3.5 | 2.7 |
 | far, colour 1 % | x | x | x | x | x | x | x | 2.7 | 2.7 | x | x | x | x | x |
 | standard, brightness 8 % | 1.9 | 1.9 | 1.9 | 1.9 | x | 1.9 | 2.3 | 1.9 | 1.9 | 1.9 | 1.9 | 1.9 | 3.5 | x |
-| standard, colour 4 % | 1.9 | 1.9 | 1.9 | 1.9 | x | 2.7 | x | 1.9 | 1.9 | x | 3.9 | x | 2.0 | x |
-| standard, colour 2 % | 2.3 | 3.1 | x | x | x | x | x | 1.9 | 1.9 | x | x | x | 3.1 | 1.9 |
-| standard, colour 1 % | x | x | x | x | x | x | x | 4.3 | x | x | x | x | x | x |
+| standard, colour 4 % | 1.9 | 1.9 | 1.9 | 1.9 | x | 2.7 | x | 1.9 | 1.9 | x | 1.9 | x | 2.3 | x |
+| standard, colour 2 % | 3.1 | 3.9 | x | x | x | x | x | 1.9 | 1.9 | x | x | x | 4.3 | 1.9 |
+| standard, colour 1 % | x | x | x | x | x | x | x | 5.5 | x | x | x | x | x | x |
 | dense, brightness 8 % | 0.7 | 0.7 | 0.7 | 0.7 | x | 0.7 | 0.9 | 0.7 | 0.7 | 0.7 | 0.7 | 0.7 | 0.9 | x |
-| dense, colour 4 % | 0.7 | 0.7 | x | x | x | x | x | 0.7 | 0.7 | x | x | x | 0.9 | x |
-| dense, colour 2 % | x | x | x | x | x | x | x | 0.7 | 0.7 | x | x | x | x | x |
+| dense, colour 4 % | 0.7 | 0.7 | x | x | x | 5.1 | x | 0.7 | 0.7 | x | x | x | 0.9 | x |
+| dense, colour 2 % | x | x | x | x | x | x | x | 1.0 | 0.7 | x | x | x | x | x |
 | dense, colour 1 % | x | x | x | x | x | x | x | x | x | x | x | x | x | x |
+<!-- MATRIX:talking:END -->
 
 White slide with dark text:
 
+<!-- MATRIX:slide:START -->
 | preset, axis, amplitude | A | B | C | D | E | F | G | H | I | J | K | L | M | N |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | far, brightness 8 % | 2.7 | 2.7 | 2.7 | 2.7 | x | x | x | 2.7 | 2.7 | 2.7 | 2.7 | 2.7 | 4.3 | 2.7 |
 | far, colour 4 % | 2.7 | 2.7 | 2.7 | 2.7 | x | 2.7 | x | 2.7 | 2.7 | 2.7 | 2.7 | x | 4.3 | 2.7 |
-| far, colour 2 % | 2.7 | 2.7 | 2.7 | 2.7 | x | x | x | 2.7 | 2.7 | 2.7 | 2.7 | x | 3.5 | 2.7 |
+| far, colour 2 % | 2.7 | 2.7 | 2.7 | 2.7 | x | x | x | 2.7 | 2.7 | 2.7 | 2.7 | x | 4.3 | 2.7 |
 | far, colour 1 % | 2.7 | 2.7 | x | x | x | x | x | 2.7 | 2.7 | x | x | x | 3.5 | x |
 | standard, brightness 8 % | 1.9 | 1.9 | 1.9 | 1.9 | x | x | x | 1.9 | 1.9 | 1.9 | 1.9 | 1.9 | 3.1 | 1.9 |
 | standard, colour 4 % | 1.9 | 1.9 | 1.9 | 1.9 | x | 1.9 | x | 1.9 | 1.9 | 1.9 | 1.9 | x | 3.1 | 1.9 |
-| standard, colour 2 % | 1.9 | 1.9 | 1.9 | 1.9 | x | 1.9 | x | 1.9 | 1.9 | x | 2.3 | x | 2.0 | x |
-| standard, colour 1 % | 1.9 | 5.9 | x | x | x | x | x | 1.9 | 1.9 | x | x | x | 3.5 | x |
+| standard, colour 2 % | 1.9 | 1.9 | 1.9 | 1.9 | x | 2.3 | x | 1.9 | 1.9 | x | 1.9 | x | 2.0 | x |
+| standard, colour 1 % | 1.9 | 4.3 | x | x | x | x | x | 1.9 | 1.9 | x | x | x | 3.5 | x |
 | dense, brightness 8 % | 0.7 | 0.7 | 0.7 | 0.7 | x | x | x | 0.7 | 0.7 | 0.7 | 0.7 | 0.7 | 0.9 | 0.7 |
-| dense, colour 4 % | 0.7 | 0.7 | 0.7 | 0.7 | x | 0.9 | x | 0.7 | 0.7 | 0.7 | 0.7 | x | 0.9 | 0.7 |
-| dense, colour 2 % | 0.7 | 0.7 | x | x | x | x | x | 0.7 | 0.7 | x | x | x | 0.9 | 0.7 |
-| dense, colour 1 % | x | x | x | x | x | x | x | 0.7 | 0.7 | x | x | x | x | x |
+| dense, colour 4 % | 0.7 | 0.7 | 0.7 | 0.7 | x | 0.9 | x | 0.7 | 0.7 | 0.7 | 0.7 | x | 0.9 | x |
+| dense, colour 2 % | 0.7 | 0.7 | x | x | x | x | x | 0.7 | 0.7 | x | x | x | 0.9 | x |
+| dense, colour 1 % | x | x | x | x | x | x | x | 0.8 | 0.7 | x | x | x | x | x |
+<!-- MATRIX:slide:END -->
 
 RESULTS.md has the same cells with bit error rates, packet counts and throughput. What the tables show:
 
 - **Head-on and 30° off-axis behave the same.** Perspective is not the limit.
 - **Hand shake punishes the brightness axis on text.** With 3 px of shake the brightness axis fails on the white slide for every preset (text edges moving under the grid look like signal), while the colour axis, which cannot see neutral edges, still decodes at 4 %. On the talking head, which has no sharp neutral edges, brightness at 8 % is the sturdier of the two. Pick the axis by content.
-- **1 m works with a 720p camera at 4 % colour or 8 % brightness** for `far` and `standard`; handheld at 1 m only at 8 % brightness on smooth content. **2 m does not** at this resolution.
+- **1 m works with a 720p camera at 4 % colour or 8 % brightness** for `far` and `standard`. Handheld at 1 m works at 8 % brightness on smooth content, barely on the colour axis (one cell, 8.3 s) and not at all on the text slide. **2 m does not** at this resolution.
 - **A 60 fps camera or a 120 Hz display buys roughly a factor of two in amplitude.** Both columns decode at 1–2 % colour where the 30 fps, 60 Hz case needs 2–4 %.
 - **JPEG-like compression at quality 60 removes the colour signal entirely** and leaves the brightness signal alone.
 - **Long exposure (1/30 s) and double noise** each cost about a factor of two in amplitude.
 - **Dark content** (separate runs): at 4 % the brightness axis decodes a dark cinematic scene in 2.1 s and the colour axis does not; colour needs 8 % or 2 % shadow boost.
-- **Room-light flicker** breaks automatic detection when the room is bright; placing the corners by hand decodes in 2.1 s.
+- **Room-light flicker** in a bright room makes automatic detection unreliable: column N decodes in 6 of 12 cells on the slide and 2 of 12 on the talking head. In a separate run, placing the corners by hand decoded in 2.1 s.
 - **Sender frame drops** (separate runs, 600-byte payload): 1 % of display frames repeated costs nothing (21 of 21 packets); 5 % still completes (23 of 24); 15 % does not complete in 14 s.
 
 ### Join anytime (simulator)
@@ -187,7 +192,7 @@ A 32 KB file broadcast on a loop at 0.4 m, colour 4 %, talking-head content; the
 | preset | time to the whole file | packets ok / failed | packets needed ÷ K | delivered rate | file intact |
 |---|---|---|---|---|---|
 | `dense` | 156.9 s | 784 / 0 | 1.003 | 1680 bps | yes |
-| `dense`, second start | 157.6 s | 787 / 0 | 1.006 | 1673 bps | yes |
+| `dense`, second start | 157.4 s | 787 / 0 | 1.006 | 1675 bps | yes |
 | `standard` | 426.1 s | 1064 / 0 | 1.005 | 617 bps | yes |
 
 ### Video compression (real codecs, no camera)
@@ -207,14 +212,26 @@ So compression is survivable at visible amplitudes and fatal to a faint colour s
 
 ### In a real browser
 
-Desktop Chromium on Windows, 360 Hz display, receiver self-test (sender canvas → `captureStream` → `requestVideoFrameCallback` → worker with WebGL2 downscale → decoder):
+Receiver self-test (sender canvas → `captureStream` → `requestVideoFrameCallback` → worker with WebGL2 downscale → decoder), one Windows desktop with a 360 Hz display. An 83-byte text, colour axis at 4 %. Times are from page load to the complete, byte-exact message.
 
-- `standard`, colour 4 %: 83-byte text decoded in 3.2 s from page load (lock at 0.5 s, first packet at 2.4 s), 0 raw bit errors in 1,512 bits, byte-exact. Worker cost per frame: 0.6 ms of decoding plus 6.5 ms of downscale and read-back at 640×360.
-- `dense`: decoded in 2.7 s, byte-exact (measured while the machine was also running simulations).
+| Where | Preset | Runs | Passed | Time to decode |
+|---|---|---|---|---|
+| Embedded Chromium pane, dev server | `standard` | 1 | 1 | 3.2 s (0 raw bit errors in 1,512 bits) |
+| Embedded Chromium pane, production build | `dense` | 1 | 1 | 2.7 s |
+| Chrome, deployed site, the four earlier builds | `standard` | 16 | 12 | 6.6–23.9 s; four runs gave up after 25–28 s |
+| Chrome, dev server, current code | `standard` | 5 | 5 | 3.3–10.3 s |
+| Chrome, deployed site, current build | `standard` | 3 | 3 | 3.8 s, 5.8 s, 7.4 s |
+| Chrome, deployed site, current build | `dense` | 1 | 1 | 4.4 s |
+| Chrome, deployed site, current build | `far` | 1 | 1 | 11.5 s |
+
+The Chrome session was the more useful test because it was the less comfortable one. There, downscaling and reading back a frame took about 20 ms instead of 6.5 ms, and an acquisition attempt could take over a second, during which frames were skipped. The earlier builds handled that badly: it measured its "no pilots seen" allowance across the hole in the timestamps and dropped locks that were correct, and a wrong 12×7 lock on a 16×9 broadcast (pilot score 0.61–0.81 when only a few gap-free windows were left to check) was never released. Five commits fixed this: lock windows must be gap-free, a lock needs four of them, patience counts received frames only, a lock that delivers no packet is released, and the worker may queue five frames. A phone is slower than this desktop, so expect it to exercise the same paths.
+
+Other measurements from the browser:
+
+- Worker cost per frame once locked: 0.6 ms of decoding plus 6.5 ms (app pane) or about 20 ms (Chrome) of downscale and read-back at 640×360.
 - Sender: refresh measured as 357 Hz and locked to 360 Hz, 18 frames per carrier cycle.
 
 This path has no optics, no sensor noise and no rolling shutter. It proves the browser plumbing, not the channel.
-
 
 ## Browser support
 
@@ -247,11 +264,12 @@ Target: iOS Safari 17+, Android Chrome, desktop Chrome, Edge, Firefox and Safari
 
 - **Untested on real hardware.** The simulator leaves out the camera's temporal noise reduction, demosaicing, moiré between pixel grids, focus hunting and OLED PWM. Temporal noise reduction in particular could attenuate the signal on phones that apply it heavily.
 - **Dark content.** The modulation is proportional to pixel value, so near-black pictures carry little. In the simulator a dark cinematic scene decoded at 4 % on the brightness axis but not on the colour axis, which needed 8 % or shadow boost raised to 2 %. Shadow boost lifts flicker on black, which is where it is easiest to see.
-- **Strong mains flicker with a short exposure.** Room light flickering at 100 Hz aliases onto the same 10 Hz as the carrier. The data survives (the in-cell checker cancels it), but automatic screen detection locks onto the room instead of the screen. Placing the corners by hand works (simulator).
+- **Strong mains flicker with a short exposure.** Room light flickering at 100 Hz aliases onto the same 10 Hz as the carrier. The data survives (the in-cell checker cancels it), but automatic screen detection often picks the room instead of the screen: 8 of 24 cells decoded in that column. Placing the corners by hand works (simulator).
 - **2 m at 720p.** Far-preset quadrants shrink to about 6 camera pixels and the lock is no longer reliable: 0 of 24 sweep cells decoded, one separate run did. A single 1080p run also decoded. Treat 2 m as unproven.
 - **Memory at the largest processing size.** The receiver keeps 0.85 s of frames as four float planes each: about 90 MB at 640 px and about 370 MB at 1280 px. Use 1280 px on a desktop or a recent phone only. Storing planes as 16-bit integers would halve this.
 - **Automatic detection needs either a clearly brighter screen or a signal of a few percent.** At stealth amplitudes on a screen that is not the brightest thing in view, use "Place corners by hand".
-- **12-pilot grids (`far`, `export`) have a thin false-lock margin**: the pilot check scores up to 0.55 on pure noise against a threshold of 0.6. A false lock is dropped within seconds, but it costs time.
+- **12-pilot grids (`far`, `export`) have a thin false-lock margin**: the pilot check scores up to 0.55 on pure noise against a threshold of 0.6, and a 12×7 grid laid over a 16×9 broadcast scored 0.61–0.81 in Chrome when few clean windows were available. Such a lock now needs four gap-free windows and near-square cells, and is released after seven packet times without a valid packet (5.6 s for `far`), but it still costs that time.
+- **Acquisition blocks the worker.** One attempt takes roughly 0.2 s on a fast desktop and over a second on a slow graphics path; frames arriving meanwhile are skipped. The receiver now survives this, but on a phone the first lock will be slower than the simulator's 0.5 s. Splitting acquisition across frames is the proper fix.
 - **Export through `MediaRecorder` is at the browser's mercy**: frame rate and bitrate requests are hints. The codec numbers in RESULTS.md come from ffmpeg, not from a browser recording.
 - The grid is locked to the sender's canvas, so anything drawn over it (the badge, browser UI in a shared tab) costs cells; Reed–Solomon absorbs a few.
 

@@ -23,12 +23,12 @@
 | far (340 bps) | luma 8 % | 60 | H.264 CRF 28 | 271 kbit/s | yes | 2.4 s | 2 / 0 | 0.0e+0 |
 | far (340 bps) | luma 8 % | 60 | VP9 CRF 32 | 369 kbit/s | yes | 2.4 s | 2 / 0 | 0.0e+0 |
 | standard (620 bps) | chroma 4 % | 60 | none (raw frames) | - | yes | 1.6 s | 3 / 0 | 0.0e+0 |
-| standard (620 bps) | chroma 4 % | 60 | H.264 CRF 18 | 364 kbit/s | yes | 1.6 s | 3 / 0 | 3.3e-3 |
-| standard (620 bps) | chroma 4 % | 60 | H.264 CRF 23 | 128 kbit/s | no | - | 0 / 1 | - |
+| standard (620 bps) | chroma 4 % | 60 | H.264 CRF 18 | 364 kbit/s | yes | 1.6 s | 3 / 0 | 2.0e-3 |
+| standard (620 bps) | chroma 4 % | 60 | H.264 CRF 23 | 128 kbit/s | no | - | 0 / 3 | - |
 | standard (620 bps) | chroma 4 % | 60 | H.264 CRF 28 | 47 kbit/s | no | - | 0 / 0 | - |
 | standard (620 bps) | chroma 4 % | 60 | VP9 CRF 32 | 88 kbit/s | no | - | 0 / 0 | - |
 | standard (620 bps) | luma 8 % | 60 | none (raw frames) | - | yes | 1.6 s | 3 / 0 | 0.0e+0 |
 | standard (620 bps) | luma 8 % | 60 | H.264 CRF 18 | 938 kbit/s | yes | 1.6 s | 3 / 0 | 0.0e+0 |
 | standard (620 bps) | luma 8 % | 60 | H.264 CRF 23 | 492 kbit/s | yes | 1.6 s | 3 / 0 | 0.0e+0 |
-| standard (620 bps) | luma 8 % | 60 | H.264 CRF 28 | 271 kbit/s | yes | 1.6 s | 3 / 0 | 6.6e-4 |
+| standard (620 bps) | luma 8 % | 60 | H.264 CRF 28 | 271 kbit/s | yes | 1.6 s | 3 / 0 | 2.0e-3 |
 | standard (620 bps) | luma 8 % | 60 | VP9 CRF 32 | 405 kbit/s | yes | 1.6 s | 3 / 0 | 0.0e+0 |
