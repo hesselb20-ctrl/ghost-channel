@@ -78,6 +78,16 @@ Derivation and the alternatives that were rejected: [`DESIGN.md`](DESIGN.md) sec
    links get a button. A file is offered as a download with a neutral content type.
 
 <picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/scene-dark.gif">
+  <img src=".github/assets/scene-light.gif" width="100%" alt="A 16 by 9 grid of low tiles on a flat screen rises and falls in four phase groups, with 18 outlined pilot tiles, while a small camera outline at the side samples it one and a half times per carrier cycle.">
+</picture>
+
+<sub>One packet of the `standard` preset: 16×9 cells, 18 pilots, two 200 ms symbols. Each tile's
+phase is the real cell quadrant from the repository's encoder (`Transmitter.symbolCells` in
+`src/core/packet.ts`, sending the landing page message). Height is exaggerated and time is 20 times
+slower, so the 20 Hz carrier runs at 1 Hz.</sub>
+
+<picture>
   <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/rule-mobile-04-dark.svg">
   <source media="(max-width: 600px)" srcset=".github/assets/rule-mobile-04-light.svg">
   <source media="(prefers-color-scheme: dark)" srcset=".github/assets/rule-04-dark.svg">
