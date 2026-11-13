@@ -1,9 +1,10 @@
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/hero-mobile-dark.svg">
-  <source media="(max-width: 600px)" srcset=".github/assets/hero-mobile-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/hero-dark.svg">
-  <img src=".github/assets/hero-light.svg" width="100%" alt="Ghost Channel. Sends data to a camera as faint screen flicker. Prototype, no phone tested yet.">
-</picture>
+# Ghost Channel
+
+Sends data to a camera as faint screen flicker.
+
+<img src=".github/assets/figure.webp" width="100%" alt="3D chart. Each dot is one simulated attempt to read the hidden flicker, by flicker strength and distance, coloured by whether it decoded. The dots settle into a success surface: it works close up, decodes 0 of 24 at 2 metres, and never returns a wrong message.">
+
+<sub>From the simulator sweep in `results/raw/sweep-*.json`. Three distances were measured; the surface between them is interpolated. Simulator only: no phone has been tested.</sub>
 
 <picture>
   <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/rule-mobile-01-dark.svg">
@@ -50,13 +51,6 @@ Derivation and the alternatives that were rejected: [`DESIGN.md`](DESIGN.md) sec
   <img src=".github/assets/rule-03-light.svg" width="100%" alt="03 How it works">
 </picture>
 
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/flow-mobile-dark.svg">
-  <source media="(max-width: 600px)" srcset=".github/assets/flow-mobile-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/flow-dark.svg">
-  <img src=".github/assets/flow-light.svg" width="100%" alt="Data flow. On the sender page: a demo scene, image, video, webcam or shared screen is the picture; the payload is packed into a container, protected with Reed-Solomon and a fountain code; a WebGL2 shader adds a 20 Hz carrier whose phase carries two bits per cell. On the receiver page: camera frames go to a Web Worker, the screen is found by its carrier power or by corners placed by hand, and the grid and symbol timing are locked with pilot cells. Then each cell is demodulated, errors are corrected, and a link is shown to open on tap or a file offered as a download.">
-</picture>
-
 1. **Pack.** The payload (link, text or file) goes into a container with its own CRC-32. It is cut
    into blocks. Each packet carries a 6-byte header, one fountain-coded block and a CRC-32, then
    Reed-Solomon parity over GF(256). The Reed-Solomon and fountain code are written for this project.
@@ -76,16 +70,6 @@ Derivation and the alternatives that were rejected: [`DESIGN.md`](DESIGN.md) sec
    rebuild the object.
 7. **Show.** A link is shown in full and opens in a new tab only when tapped. Only `http` and `https`
    links get a button. A file is offered as a download with a neutral content type.
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/scene-dark.gif">
-  <img src=".github/assets/scene-light.gif" width="100%" alt="A 16 by 9 grid of low tiles on a flat screen rises and falls in four phase groups, with 18 outlined pilot tiles, while a small camera outline at the side samples it one and a half times per carrier cycle.">
-</picture>
-
-<sub>One packet of the `standard` preset: 16×9 cells, 18 pilots, two 200 ms symbols. Each tile's
-phase is the real cell quadrant from the repository's encoder (`Transmitter.symbolCells` in
-`src/core/packet.ts`, sending the landing page message). Height is exaggerated and time is 20 times
-slower, so the 20 Hz carrier runs at 1 Hz.</sub>
 
 <picture>
   <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/rule-mobile-04-dark.svg">
