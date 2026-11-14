@@ -6,12 +6,7 @@ Sends data to a camera as faint screen flicker.
 
 <sub>From the simulator sweep in `results/raw/sweep-*.json`. Three distances were measured; the surface between them is interpolated. Simulator only: no phone has been tested.</sub>
 
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/rule-mobile-01-dark.svg">
-  <source media="(max-width: 600px)" srcset=".github/assets/rule-mobile-01-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/rule-01-dark.svg">
-  <img src=".github/assets/rule-01-light.svg" width="100%" alt="01 What it is">
-</picture>
+## What it is
 
 Ghost Channel hides a link, a short text or a small file in whatever a screen is showing. It adds a
 faint, fast colour flicker to the picture. A phone camera on a web page is meant to read it back.
@@ -23,12 +18,7 @@ and nobody has yet measured whether people can see the flicker.
 
 Live site: https://hesselb20-ctrl.github.io/ghost-channel/
 
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/rule-mobile-02-dark.svg">
-  <source media="(max-width: 600px)" srcset=".github/assets/rule-mobile-02-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/rule-02-dark.svg">
-  <img src=".github/assets/rule-02-light.svg" width="100%" alt="02 Why it exists">
-</picture>
+## Why it exists
 
 **The problem.** A QR code works, but it takes space on the screen and everyone sees it. Data can also
 ride on the picture itself as a temporal flicker. A screen refreshes at 60 Hz or more; a phone camera
@@ -44,12 +34,7 @@ screen that also carries a link or a file. That use case is the design target. N
 
 Derivation and the alternatives that were rejected: [`DESIGN.md`](DESIGN.md) sections 1 and 2.
 
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/rule-mobile-03-dark.svg">
-  <source media="(max-width: 600px)" srcset=".github/assets/rule-mobile-03-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/rule-03-dark.svg">
-  <img src=".github/assets/rule-03-light.svg" width="100%" alt="03 How it works">
-</picture>
+## How it works
 
 1. **Pack.** The payload (link, text or file) goes into a container with its own CRC-32. It is cut
    into blocks. Each packet carries a 6-byte header, one fountain-coded block and a CRC-32, then
@@ -71,12 +56,7 @@ Derivation and the alternatives that were rejected: [`DESIGN.md`](DESIGN.md) sec
 7. **Show.** A link is shown in full and opens in a new tab only when tapped. Only `http` and `https`
    links get a button. A file is offered as a download with a neutral content type.
 
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/rule-mobile-04-dark.svg">
-  <source media="(max-width: 600px)" srcset=".github/assets/rule-mobile-04-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/rule-04-dark.svg">
-  <img src=".github/assets/rule-04-light.svg" width="100%" alt="04 Capabilities">
-</picture>
+## Capabilities
 
 What the code does today.
 
@@ -136,12 +116,7 @@ Known limits, from the repository's own docs:
 - The 20 Hz carrier is inside the range that matters for photosensitive epilepsy. The visible debug
   mode shows a seizure warning and asks for confirmation first.
 
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/rule-mobile-05-dark.svg">
-  <source media="(max-width: 600px)" srcset=".github/assets/rule-mobile-05-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/rule-05-dark.svg">
-  <img src=".github/assets/rule-05-light.svg" width="100%" alt="05 Quick start">
-</picture>
+## Quick start
 
 Requires Node 22.18 or newer (`engines` in `package.json`). Commands below were run in a clone of
 this repository on Windows 11 with Node 26.13.0 and npm 11.20.0. They were not tested on macOS or Linux.
@@ -184,12 +159,7 @@ Not run here: the receiver's self-test in a browser, any phone test, and the sim
 switches to HTTPS when `.cert/cert.pem` and `.cert/key.pem` exist, and accepts `*.trycloudflare.com`
 host names (`vite.config.ts`). The live site above is already served over HTTPS.
 
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/rule-mobile-06-dark.svg">
-  <source media="(max-width: 600px)" srcset=".github/assets/rule-mobile-06-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/rule-06-dark.svg">
-  <img src=".github/assets/rule-06-light.svg" width="100%" alt="06 Stack, status, roadmap">
-</picture>
+## Stack, status, roadmap
 
 **Stack**
 
@@ -230,11 +200,6 @@ host names (`vite.config.ts`). The live site above is already served over HTTPS.
 | [`RESULTS.md`](RESULTS.md) | Every measured number, labelled by source |
 | [`results/raw/`](results/raw) | Raw output of the experiment scripts |
 
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset=".github/assets/rule-mobile-07-dark.svg">
-  <source media="(max-width: 600px)" srcset=".github/assets/rule-mobile-07-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/rule-07-dark.svg">
-  <img src=".github/assets/rule-07-light.svg" width="100%" alt="07 License">
-</picture>
+## License
 
 MIT. See [`LICENSE`](LICENSE).
