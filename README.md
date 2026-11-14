@@ -56,6 +56,10 @@ Derivation and the alternatives that were rejected: [`DESIGN.md`](DESIGN.md) sec
 7. **Show.** A link is shown in full and opens in a new tab only when tapped. Only `http` and `https`
    links get a button. A file is offered as a download with a neutral content type.
 
+<img src=".github/assets/figure-how.webp" width="100%" alt="A 16 by 9 grid of cells coloured by phase feeds four 20 Hz waves; screen-frame samples cancel in threes; the camera's samples trace slower 10 Hz waves.">
+
+<sub>Real cell phases and the repo's carrier formula. The 82% figure is from the analytic model; no phone tested.</sub>
+
 ## Capabilities
 
 What the code does today.
@@ -115,6 +119,10 @@ Known limits, from the repository's own docs:
 - A faint colour signal does not survive ordinary video compression. `export` does, but it is visible.
 - The 20 Hz carrier is inside the range that matters for photosensitive epilepsy. The visible debug
   mode shows a seizure warning and asks for confirmation first.
+
+<img src=".github/assets/figure-more.webp" width="100%" alt="Bars on a log time axis reach a 61-byte link in 0.5 to 3.3 s and a 32 KB file in 157 s and 426 s; then 24 compressed clips plotted by bitrate, with three colour-axis failures.">
+
+<sub><code>RESULTS.md</code>, simulator and ffmpeg only. No physical phone.</sub>
 
 ## Quick start
 
